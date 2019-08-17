@@ -2,8 +2,11 @@
 
 class Guests extends Controller
 {
-    private $path = 'guests';
+    private $_path = 'guests';
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -12,48 +15,49 @@ class Guests extends Controller
             header('location: ' . URL . 'login');
         }
 
-        $this->view->js = array($this->path . '/js/checkValidation.js');
+        $this->view->js = array($this->_path . '/js/checkValidation.js');
     }
 
     /**
      * Call the render function
      *
+     * @return void
      */
     public function index()
     {
-        $this->view->stationList = $this->model->stationList();
-        $this->view->getLines = $this->model->getLines();
-        $this->view->render($this->path . '/index');
+        $this->view->setGuestlist = $this->model->getGuestlist();
+        $this->view->render($this->_path . '/index');
     }
 
     /**
      * Shows the create page
      *
+     * @return void
      */
     public function create()
     {
         $data = array();
-        $data['station_name'] = $_POST['station_name'];
-        $data['station_time'] = $_POST['station_time'];
-        $data['station_sequence'] = $_POST['station_sequence'];
-        $data['station_to_line'] = $_POST['station_to_line'];
-        $data['station_status'] = $_POST['station_status'];
+        $data['salutation'] = $_POST['salutation'];
+        $data['firstname'] = $_POST['firstname'];
+        $data['lastname'] = $_POST['lastname'];
+        $data['birthday'] = $_POST['birthday'];
+        $data['identity'] = $_POST['identity'];
 
         $this->model->create($data);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 
     /**
      * Shows the edit page
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function edit($id)
     {
-        $this->view->station = $this->model->edit($id);
-        $this->view->getLines = $this->model->getLines();
-        $this->view->getLineToStation = $this->model->getLineToStation($id);
-        $this->view->render($this->path . '/edit');
+        $this->view->guest = $this->model->edit($id);
+        $this->view->render($this->_path . '/edit');
         
     }
 
@@ -61,29 +65,33 @@ class Guests extends Controller
      * The edit save function
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function editSave($id)
     {
         $data = array();
-        $data['station_id'] = $id;
-        $data['station_name'] = $_POST['station_name'];
-        $data['station_time'] = $_POST['station_time'];
-        $data['station_sequence'] = $_POST['station_sequence'];
-        $data['station_to_line'] = $_POST['station_to_line'];
-        $data['station_status'] = $_POST['station_status'];
+        $data['guest_id'] = $id;
+        $data['salutation'] = $_POST['salutation'];
+        $data['firstname'] = $_POST['firstname'];
+        $data['lastname'] = $_POST['lastname'];
+        $data['birthday'] = $_POST['birthday'];
+        $data['identity'] = $_POST['identity'];
 
         $this->model->editSave($data);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 
     /**
      * The delete function
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function delete($id)
     {
         $this->model->delete($id);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 }

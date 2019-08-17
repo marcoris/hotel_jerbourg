@@ -8,104 +8,51 @@ class Guests_Model extends Model
     }
 
     /**
-     * Shows the list of stations
+     * Shows the list of guests
      *
-     * @return array The stations list
+     * @return array The guests list
      */
-    public function stationList()
+    public function getGuestlist()
     {
         return $this->db->select(
             'SELECT
-                st.station_id,
-                st.station_name,
-                st.station_time,
-                st.sequence AS station_sequence,
-                st.station_status,
-                l.line_name AS line_name
+                guest_id,
+                salutation,
+                firstname,
+                lastname,
+                birthday,
+                identity
             FROM
-                station AS st
-                LEFT JOIN station_to_line AS stl ON (st.station_id = stl.station_id)
-                LEFT JOIN line AS l ON (l.line_id = stl.line_id)'
-        );
-    }
-    
-    /**
-     * Get lines
-     *
-     * @return array The lines data
-     */
-    public function getLines()
-    {
-        return $this->db->select(
-            'SELECT
-                line_id,
-                line_name
-            FROM
-                line
+                guests
             WHERE
-                line_id != 1'
-        );
-    }
-    
-    /**
-     * Get line to station
-     * 
-     * @param integer the affected id
-     *
-     * @return array The line id
-     */
-    public function getLineToStation($id)
-    {
-        return $this->db->select(
-            'SELECT
-                line_id
-            FROM
-                station_to_line
-            WHERE
-                station_id = :station_id',
-            array(':station_id' => $id)
+                deleted IS NULL'
         );
     }
 
     /**
-     * Creates a station
+     * Creates a guest
      *
      * @param array $data The data
+     * 
+     * @return void
      */
     public function create($data)
     {
         $insertStation = array(
-            'station_name' => $data['station_name'],
-            'station_time' => $data['station_time'],
-            'sequence' => $data['station_sequence'],
-            'station_status' => $data['station_status']
+            'salutation' => $data['salutation'],
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'birthday' => $data['birthday'],
+            'identity' => $data['identity'],
+            'created' => date("d.m.Y H:i:s")
         );
         
-        // insert station
-        $this->db->insert('station', $insertStation);
-
-        // get last inserted station id
-        $getLastID = $this->db->select(
-            'SELECT
-                station_id
-            FROM
-                station
-            ORDER BY
-                station_id DESC
-            LIMIT 1'
-        );
-
-        $insertStationToLine = array(
-            'station_id' => $getLastID[0]['station_id'],
-            'line_id' => $data['station_to_line']
-        );
-        
-        // insert relation
-        $this->db->insert('station_to_line', $insertStationToLine);
+        // insert guest
+        $this->db->insert('guests', $insertStation);
     }
 
     /**
-     * Shows the affected station to edit
+     * Shows the affected guest to edit
      *
      * @param int $id The affected id
      * 
@@ -115,50 +62,49 @@ class Guests_Model extends Model
     {
         return $this->db->select(
             'SELECT
-                station_id,
-                station_name,
-                station_time,
-                sequence,
-                station_status
+                guest_id,
+                salutation,
+                firstname,
+                lastname,
+                birthday,
+                identity
             FROM
-                station
+                guests
             WHERE
-                station_id = :_id', array(':_id' => $id)
+                guest_id = :_id', array(':_id' => $id)
         );
     }
 
     /**
-     * Saves the edited station data
+     * Saves the edited guest data
      *
      * @param array $data The data
+     * 
+     * @return void
      */
     public function editSave($data)
     {
         $updateArray = array(
-            'station_name' => $data['station_name'],
-            'station_time' => $data['station_time'],
-            'sequence' => $data['station_sequence'],
-            'station_status' => $data['station_status']
+            'salutation' => $data['salutation'],
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'birthday' => $data['birthday'],
+            'identity' => $data['identity'],
+            'updated' => date("d.m.Y H:i:s")
         );
-        $this->db->update('station', $updateArray, "`station_id`={$data['station_id']}");
-
-        $updateStationToLine = array(
-            'line_id' => $data['station_to_line']
-        );
-        $this->db->update('station_to_line', $updateStationToLine, "`station_id`={$data['station_id']}");
+        $this->db->update('guests', $updateArray, "`guest_id`={$data['guest_id']}");
     }
 
     /**
-     * Deletes the affected station
+     * Sets the affected guest deleted
      *
      * @param int $id The affected id
      */
     public function delete($id)
     {
-        // delete station
-        $this->db->delete('station', "station_id = '$id'");
-
-        // delete relation
-        $this->db->delete('station_to_line', "station_id = '$id'");
+        $updateArray = array(
+            'deleted' => date("d.m.Y H:i:s")
+        );
+        $this->db->update('guests', $updateArray, "`guest_id`=$id");
     }
 }

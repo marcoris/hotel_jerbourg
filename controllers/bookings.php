@@ -98,7 +98,7 @@ class Bookings extends Controller
         $this->view->setGuests = $this->model->getGuests();
         $this->view->setFreeRooms = $this->model->getFreeRooms();
         $this->view->setBookedRoom = $this->model->getBookedRoom($id);
-        $this->view->bookings = $this->model->edit($id);
+        $this->view->booking = $this->model->edit($id);
 
         $this->view->render($this->_path . '/edit');
     }

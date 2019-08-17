@@ -3,29 +3,35 @@ $(function () {
     $(':submit').on('click', function(e) {
         var fail = false;
 
-        if ($("#station_name").val() == '') {
-            $("#station_name").addClass("required");
+        if ($("#salutation").val() == '') {
+            $("#salutation").addClass("required");
             fail = true;
         } else {
-            $("#station_name").removeClass("required");
+            $("#salutation").removeClass("required");
         }
-        if ($("#station_time").val() == '') {
-            $("#station_time").addClass("required");
+        if ($("#firstname").val() == '') {
+            $("#firstname").addClass("required");
             fail = true;
         } else {
-            $("#station_time").removeClass("required");
+            $("#firstname").removeClass("required");
         }
-        if ($("#station_sequence").val() == '') {
-            $("#station_sequence").addClass("required");
+        if ($("#lastname").val() == '') {
+            $("#lastname").addClass("required");
             fail = true;
         } else {
-            $("#station_sequence").removeClass("required");
+            $("#lastname").removeClass("required");
         }
-        if ($("#station_status").val() == '') {
-            $("#station_status").addClass("required");
+        if ($("#birthday").val() == '') {
+            $("#birthday").addClass("required");
             fail = true;
         } else {
-            $("#station_status").removeClass("required");
+            $("#birthday").removeClass("required");
+        }
+        if ($("#identity").val() == '') {
+            $("#identity").addClass("required");
+            fail = true;
+        } else {
+            $("#identity").removeClass("required");
         }
 
         if (fail) {
@@ -37,5 +43,14 @@ $(function () {
         if (!confirm('Wirklich löschen?')) {
             e.preventDefault();
         }
+    });
+
+    // formatts the datepicker
+    $("#birthday").datepicker({
+        dateFormat: 'dd.mm.yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:+0",
+        firstDay: 1
     });
 });

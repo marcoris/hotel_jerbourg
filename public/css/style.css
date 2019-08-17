@@ -1,0 +1,410 @@
+*,
+html,
+body {
+    max-width: 100%;
+}
+
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    height: 100%;
+    color: black !important;
+}
+
+h1,
+h2 {
+    margin-top: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.loggedin h1,
+.loggedin h2,
+.loggedin p,
+.loggedin button,
+.loggedin a,
+.loggedin label {
+    margin-left: 20px;
+}
+
+body {
+    background: white;
+}
+
+.header {
+    background: #ddd;
+    padding: 20px;
+}
+
+.jumbotron {
+    height: calc(100% - 120px);
+    background-color: white;
+    overflow: auto;
+    margin-bottom: 0;
+    padding: 15px 0;
+}
+
+.bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bg-lok {
+    background-image: url('../images/lok3.jpg');
+}
+
+.wrap {
+    padding: 20px;
+    margin-top: 50px;
+    border: 2px solid white;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    background-color: rgba(255,255,255,.65);
+}
+
+.bg-lok .row h1,
+.bg-lok .row h4,
+.bg-lok .row form,
+.bg-lok .row a,
+.bg-lok .row p {
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.whitebg {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    padding-left: 40px;
+    padding-bottom: 20px;
+}
+
+.schedule-container {
+    margin: 0 auto;
+    width: 600px;
+}
+
+.departure {
+    margin-top: 50px;
+}
+
+.start-time-circle {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background: black;
+    border-radius: 50%;
+}
+
+.start-time-line {
+    display: inline-block;
+    height: 1px;
+    width: 30%;
+    vertical-align: middle;
+    background: black;
+}
+
+.start-end-time-container {
+    margin-bottom: 20px;
+}
+
+.total-time {
+    float: right;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.col-md-10 {
+    padding-right: 0;
+}
+
+label,
+.btn-login,
+.btn-contact {
+    min-width: 180px;
+    max-width: 180px;
+}
+
+select {
+    margin-left: -3px;
+    border: 1px solid silver;
+}
+
+select,
+input[type='text'],
+input[type='text']:disabled,
+input[type='number'],
+input[type='password'],
+textarea {
+    box-sizing: border-box;
+    min-width: 180px;
+}
+
+input[type='text'],
+input[type='text']:disabled,
+input[type='number'],
+input[type='password'] {
+    box-sizing:content-box;
+    border: 1px solid silver;
+}
+
+.required {
+    border-color: red !important;
+    background: pink;
+}
+
+.required-star {
+    color: red;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.lok {
+    background-color: #94ffffaa !important;
+}
+
+.krank {
+    background-color: #ffced6 !important;
+}
+
+.ferien {
+    background-color: #94ff9daa !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.useplan {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 450px;
+    height: 350px;
+    margin: 0 auto;
+}
+
+.useplan div {
+    color: rgb(180, 180, 180);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(230, 230, 230);
+    width: 100px;
+    height: 100px;
+}
+
+.useplan div a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border: 2px solid gray;
+    background-color: silver;
+    margin-left: 0;
+}
+
+.useplan div a,
+.useplan div a:link,
+.useplan div a:active,
+.useplan div a:focus {
+    color: black;
+    text-decoration: none;
+    font-weight: 100;
+    transition: font-weight .3s ease, box-shadow .3s ease;
+}
+
+.useplan div a:hover {
+    font-weight: bold;
+    box-shadow: 0 0 15px;
+}
+
+.useplantable th {
+    min-width: 140px;
+}
+
+.useplandivs {
+    display: inline-block;
+}
+
+.useplandivs:after {
+    content: ', ';
+}
+
+.useplandivs:last-of-type:after {
+    content: '';
+}
+
+.title-box {
+    margin: -90px 100px 0;
+}
+
+.title-box p {
+    margin: 0;
+}
+
+.line-box {
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    line-height: 90px;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+}
+
+.line-1:not(a) {
+    background-color: cornflowerblue;
+}
+
+.line-1:link,
+.line-1:visited {
+    font-weight: bold;
+    color: cornflowerblue;
+}
+
+.line-2:not(a) {
+    background-color: red;
+}
+
+.line-2:link,
+.line-2:visited {
+    font-weight: bold;
+    color: red;
+}
+.line-3:not(a) {
+    background-color: yellowgreen;
+}
+
+.line-3:link,
+.line-3:visited {
+    font-weight: bold;
+    color: yellowgreen;
+}
+.line-4:not(a) {
+    background-color: gold;
+}
+
+.line-4:link,
+.line-4:visited {
+    font-weight: bold;
+    color: gold;
+}
+
+.row+.row {
+    margin-top: -10px;
+}
+.table th {
+    padding: 10px;
+    line-height: 30px;
+}
+
+.fa-clock {
+    font-size: 30px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.short-tablerow {
+    line-height: 0 !important;
+}
+
+.table {
+    background-color: rgba(255,255,255,.9);
+}
+
+.table-ball {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.table-start-ball,
+.timetable tr:last-child span:not(.table-ball-mainstation),
+.timetable tr:first-child span:not(.table-ball-mainstation) {
+    background-color: silver;
+}
+
+.table-ball-mainstation {
+    background-color: black;
+}
+
+.table-padding {
+    padding-left: 17px !important;
+}
+
+.table td span+span {
+    margin-left: 20px;
+}
+
+.table tbody tr:hover {
+    transition: background-color .4s ease;
+    background-color: #ddd !important;
+}
+
+.schedule-link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.schedule-top {
+    justify-content: center;
+    line-height: 40px;
+    background-color: #dee2e6;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.schedule-top .from {
+    display: inline-block;
+    text-align: right;
+    width: 46%;
+}
+
+.schedule-top .to {
+    display: inline-block;
+    width: 46%;
+}
+
+.reverse-trigger {
+    font-size: 40px;
+    width: 7%;
+    color: black;
+}
+
+.btn+.btn {
+    margin-left: 5px;
+}
+
+.footer {
+    padding: 20px;
+    border-top: 2px solid #ddd;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+    .wrap {
+        overflow: visible;
+        margin-top: 0px;
+    }
+    .page-break {
+        overflow: visible;
+        display: inline;
+        page-break-before: auto;
+        break-before: auto;
+        page-break-after: auto;
+        break-after: auto;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+}

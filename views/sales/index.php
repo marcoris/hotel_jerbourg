@@ -1,5 +1,5 @@
 <div class="jumbotron jumbotron-fluid loggedin">
-    <h2>Umsatz nach Kategorie und Monat</h2>
+    <h2>Umsatz pro Kategorie pro Monat</h2>
 
     <form action="<?php echo URL; ?>employee/create" method="post">
         <label for="personalnumber">Personalnummer:<span class="required-star">*</span></label><input type="text" id="personalnumber" name="personalnumber"><br>

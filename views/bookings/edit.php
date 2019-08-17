@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid loggedin">
     <h2>Reservation <strong><?php echo str_replace(".", "", $this->booking[0]['created']) . $this->booking[0]['booking_id']; ?></strong> bearbeiten</h2>
-    <form action="<?php echo URL; ?>booking/editSave/<?php echo $this->booking[0]['booking_id']; ?>" method="post">
+    <form action="<?php echo URL; ?>bookings/editSave/<?php echo $this->booking[0]['booking_id']; ?>" method="post">
     <label for="guest">Gast 1</label>
         <select name="guest" id="guest">
             <?php

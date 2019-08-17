@@ -169,8 +169,15 @@ class Bookings_Model extends Model
 
         // if guest2 has no id then create a guest with the data and
         // get his id to set id for the bookings table
-        if ($guest2_id == 0) {
-            $insertArray = array(
+        if ($guest2_id == 0 &&
+            (!empty($data['salutation2']) ||
+            !empty($data['firstname2']) ||
+            !empty($data['lastname2']) ||
+            !empty($data['birthday2']) ||
+            !empty($data['identity2'])
+            )
+        ) {
+            $insertArray2 = array(
                 'salutation' => $data['salutation2'],
                 'firstname' => $data['firstname2'],
                 'lastname' => $data['lastname2'],
@@ -179,7 +186,7 @@ class Bookings_Model extends Model
                 'created' => date("d.m.Y H:i:s")
             );
     
-            $this->db->insert('guests', $insertArray);
+            $this->db->insert('guests', $insertArray2);
 
             // set guest2 id
             $guest_id = $this->db->select('SELECT guest_id FROM guests ORDER BY guest_id DESC LIMIT 1');
@@ -187,7 +194,7 @@ class Bookings_Model extends Model
         }
 
         // insert data in bookings table
-        $insertArray = array(
+        $insertArray3 = array(
             'guest1_id' => $guest1_id,
             'guest2_id' => $guest2_id,
             'room_id' => $data['room_id'],
@@ -198,7 +205,7 @@ class Bookings_Model extends Model
         );
 
         // create booking
-        $this->db->insert('bookings', $insertArray);
+        $this->db->insert('bookings', $insertArray3);
 
         // update room status to reserved
         $updateArray = array(
@@ -206,7 +213,7 @@ class Bookings_Model extends Model
             'updated' => date("d.m.Y H:i:s")
         );
 
-        $this->db->update('rooms', $updateArray, "room_id={$data['room_id']}");
+        $this->db->update('rooms', $updateArray, "room_id={$data[room_id]}");
     }
 
     /**

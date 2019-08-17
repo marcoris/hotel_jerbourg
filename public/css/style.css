@@ -131,15 +131,18 @@ input[type='password'] {
     margin: 0 5px;
 }
 
-tr.suite {
+tr.suite,
+.suite {
     background-color: gold !important;
 }
 
-tr.premium {
+tr.premium,
+.premium {
     background-color: silver !important;
 }
 
-tr.standard {
+tr.standard,
+.standard {
     background-color: whitesmoke !important;
 }
 

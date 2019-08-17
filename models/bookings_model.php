@@ -9,6 +9,7 @@ class Bookings_Model extends Model
     
     /**
      * Checks if a booking is older than 5 days -> set booking status to deleted
+     * and set room to free
      *
      */
     public function checkBookings()
@@ -46,7 +47,7 @@ class Bookings_Model extends Model
     }
     
     /**
-     * Gets the list of guests
+     * Gets the list of all guests
      *
      * @return array The guests list
      */
@@ -62,7 +63,7 @@ class Bookings_Model extends Model
     }
     
     /**
-     * Gets free rooms
+     * Gets all free rooms
      *
      * @return array The free rooms list
      */
@@ -83,7 +84,7 @@ class Bookings_Model extends Model
     /**
      * Gets the booked room
      *
-     * @param integer $id The booking id
+     * @param int $id The booking id
      * 
      * @return array The booked room
      */
@@ -103,7 +104,7 @@ class Bookings_Model extends Model
     }
     
     /**
-     * Gets the list of bookings
+     * Gets the list of all bookings
      *
      * @return array The bookings list
      */
@@ -141,11 +142,11 @@ class Bookings_Model extends Model
         $guest1_id;
         $guest2_id;
 
-        // if guest1 has id then he exists set id in bookings table
+        // if guest1 has id then he exists set id for bookings table
         $guest1_id = (!empty($data['guest1_id'])) ? $data['guest1_id'] : 0;
         
         // if guest1 has no id then create a guest with the data and
-        // get his id to set in the bookings table
+        // get his id to set id for the bookings table
         if ($guest1_id == 0) {
             $insertArray = array(
                 'salutation' => $data['salutation'],
@@ -163,11 +164,11 @@ class Bookings_Model extends Model
             $guest1_id = $guest_id[0]['guest_id'];
         }
         
-        // if guest2 has id then he exists set id in bookings table
+        // if guest2 has id then he exists set id for bookings table
         $guest2_id = (!empty($data['guest2_id'])) ? $data['guest2_id'] : 0;
 
         // if guest2 has no id then create a guest with the data and
-        // get his id to set in the bookings table
+        // get his id to set id for the bookings table
         if ($guest2_id == 0) {
             $insertArray = array(
                 'salutation' => $data['salutation2'],
@@ -199,7 +200,7 @@ class Bookings_Model extends Model
         // create booking
         $this->db->insert('bookings', $insertArray);
 
-        // update room status
+        // update room status to reserved
         $updateArray = array(
             'room_status' => 1,
             'updated' => date("d.m.Y H:i:s")
@@ -255,7 +256,7 @@ class Bookings_Model extends Model
     }
 
     /**
-     * Deletes the affected rollmaterial
+     * Deletes the affected booking
      *
      * @param int $id The affected id
      */
@@ -270,13 +271,14 @@ class Bookings_Model extends Model
             WHERE
                 booking_id = :id', array(':id' => $id)
         );
+
         // set booking status to deleted
         $updateArray = array(
             'booking_status' => 0,
             'deleted' => date("d.m.Y H:i:s")
         );
 
-        // $this->db->update('bookings', $updateArray, "booking_id='$id'");
+        $this->db->update('bookings', $updateArray, "booking_id='$id'");
 
         // set room status to free
         $updateArray2 = array(
@@ -284,6 +286,6 @@ class Bookings_Model extends Model
             'updated' => date("d.m.Y H:i:s")
         );
 
-        $this->db->update('rooms', $updateArray2, "room_id=$roomID[0][room_id]");
+        $this->db->update('rooms', $updateArray2, "room_id={$roomID[0][room_id]}");
     }
 }

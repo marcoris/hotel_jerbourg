@@ -2,8 +2,11 @@
 
 class Bookings extends Controller
 {
-    private $path = 'bookings';
+    private $_path = 'bookings';
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -14,12 +17,13 @@ class Bookings extends Controller
             header('location: ' . URL . 'login');
         }
 
-        $this->view->js = array($this->path . '/js/script.js');
+        $this->view->js = array($this->_path . '/js/script.js');
     }
 
     /**
      * Call the render function
      *
+     * @return void
      */
     public function index()
     {
@@ -28,12 +32,13 @@ class Bookings extends Controller
         $this->view->setFreeRooms = $this->model->getFreeRooms();
         $this->view->bookingList = $this->model->bookingList();
 
-        $this->view->render($this->path . '/index');
+        $this->view->render($this->_path . '/index');
     }
 
     /**
      * Gets the data to create
      *
+     * @return void
      */
     public function create()
     {
@@ -78,13 +83,15 @@ class Bookings extends Controller
         $data['depart'] = $_POST['depart'];
 
         $this->model->create($data);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 
     /**
      * Shows the edit page
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function edit($id)
     {
@@ -93,13 +100,15 @@ class Bookings extends Controller
         $this->view->setBookedRoom = $this->model->getBookedRoom($id);
         $this->view->bookings = $this->model->edit($id);
 
-        $this->view->render($this->path . '/edit');
+        $this->view->render($this->_path . '/edit');
     }
 
     /**
      * The edit save function
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function editSave($id)
     {
@@ -113,17 +122,19 @@ class Bookings extends Controller
         $data['booking_status'] = $_POST['booking_status'];
 
         $this->model->editSave($data);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 
     /**
      * The delete function
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function delete($id)
     {
         $this->model->delete($id);
-        header('location: ' . URL . $this->path);
+        header('location: ' . URL . $this->_path);
     }
 }

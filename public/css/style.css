@@ -27,6 +27,10 @@ h2 {
     margin-left: 20px;
 }
 
+.loggedin label {
+    padding: 5px;
+}
+
 body {
     background: white;
 }
@@ -160,16 +164,21 @@ input[type='password'] {
     margin: 0 5px;
 }
 
-.lok {
-    background-color: #94ffffaa !important;
+.suite {
+    background-color: gold !important;
 }
 
-.krank {
-    background-color: #ffced6 !important;
+.premium {
+    background-color: silver !important;
 }
 
-.ferien {
-    background-color: #94ff9daa !important;
+.standard {
+    background-color: whitesmoke !important;
+}
+
+tr.storno,
+tr.checkout {
+    opacity: .2;
 }
 
 .bold {

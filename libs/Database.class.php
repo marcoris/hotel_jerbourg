@@ -25,7 +25,7 @@ class Database extends PDO
         }
 
         if (!$stmt->execute()) {
-            echo "SQL Fehler({$stmt->errorInfo()[1]})<br>";
+            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
             die;
         }
@@ -53,7 +53,7 @@ class Database extends PDO
         }
         
         if (!$stmt->execute()) {
-            echo "SQL Fehler({$stmt->errorInfo()[1]})<br>";
+            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
             die;
         }
@@ -85,7 +85,7 @@ class Database extends PDO
         }
         
         if (!$stmt->execute()) {
-            echo "SQL Fehler({$stmt->errorInfo()[1]})<br>";
+            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
             die;
         }

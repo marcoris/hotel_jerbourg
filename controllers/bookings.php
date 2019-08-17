@@ -14,7 +14,7 @@ class Bookings extends Controller
             header('location: ' . URL . 'login');
         }
 
-        $this->view->js = array($this->path . '/js/checkValidation.js');
+        $this->view->js = array($this->path . '/js/script.js');
     }
 
     /**
@@ -23,25 +23,59 @@ class Bookings extends Controller
      */
     public function index()
     {
-        $this->view->rollmaterialList = $this->model->rollmaterialList();
+        $this->model->checkBookings();
+        $this->view->setGuests = $this->model->getGuests();
+        $this->view->setFreeRooms = $this->model->getFreeRooms();
+        $this->view->bookingList = $this->model->bookingList();
+
         $this->view->render($this->path . '/index');
     }
 
     /**
-     * Shows the create page
+     * Gets the data to create
      *
      */
     public function create()
     {
         $data = array();
-        $data['number'] = $_POST['number'];
-        $data['type'] = $_POST['type'];
-        $data['date_of_commissioning'] = $_POST['date_of_commissioning'];
-        $data['date_of_last_revision'] = $_POST['date_of_last_revision'];
-        $data['date_of_next_revision'] = $_POST['date_of_next_revision'];
-        $data['class'] = $_POST['class'];
-        $data['seating'] = $_POST['seating'];
-        $data['availability'] = $_POST['availability'];
+
+        // set data if guest select is not set
+        if (empty($_POST['guest'])) {
+            $data['salutation'] = $_POST['salutation'];
+            $data['firstname'] = $_POST['firstname'];
+            $data['lastname'] = $_POST['lastname'];
+            $data['birthday'] = $_POST['birthday'];
+            $data['identity'] = $_POST['identity'];
+            $data['guest1_id'] = '';
+        } else {
+            // set guest id of selected guest
+            $data['guest1_id'] = $_POST['guest'];
+        }
+
+        // set data if guest 2 select is not set
+        if (empty($_POST['guest2']) &&
+            !empty($_POST['salutation2']) &&
+            !empty($_POST['firstname2']) &&
+            !empty($_POST['lastname2']) &&
+            !empty($_POST['birthday2']) &&
+            !empty($_POST['identity2'])
+        ) {
+            $data['salutation2'] = $_POST['salutation2'];
+            $data['firstname2'] = $_POST['firstname2'];
+            $data['lastname2'] = $_POST['lastname2'];
+            $data['birthday2'] = $_POST['birthday2'];
+            $data['identity2'] = $_POST['identity2'];
+            $data['guest2_id'] = '';
+        } else {
+            // set guest 2 id of selected guest
+            if (!empty($_POST['guest2'])) {
+                $data['guest2_id'] = $_POST['guest2'];
+            }
+        }
+
+        $data['room_id'] = $_POST['room'];
+        $data['arrive'] = $_POST['arrive'];
+        $data['depart'] = $_POST['depart'];
 
         $this->model->create($data);
         header('location: ' . URL . $this->path);
@@ -54,9 +88,12 @@ class Bookings extends Controller
      */
     public function edit($id)
     {
-        $this->view->rollmaterial = $this->model->edit($id);
+        $this->view->setGuests = $this->model->getGuests();
+        $this->view->setFreeRooms = $this->model->getFreeRooms();
+        $this->view->setBookedRoom = $this->model->getBookedRoom($id);
+        $this->view->bookings = $this->model->edit($id);
+
         $this->view->render($this->path . '/edit');
-        
     }
 
     /**
@@ -67,15 +104,13 @@ class Bookings extends Controller
     public function editSave($id)
     {
         $data = array();
-        $data['rollmaterial_id'] = $id;
-        $data['number'] = $_POST['number'];
-        $data['type'] = $_POST['type'];
-        $data['date_of_commissioning'] = $_POST['date_of_commissioning'];
-        $data['date_of_last_revision'] = $_POST['date_of_last_revision'];
-        $data['date_of_next_revision'] = $_POST['date_of_next_revision'];
-        $data['class'] = $_POST['class'];
-        $data['seating'] = $_POST['seating'];
-        $data['availability'] = $_POST['availability'];
+        $data['booking_id'] = $id;
+        $data['guest1_id'] = $_POST['guest'];
+        $data['guest2_id'] = $_POST['guest2'];
+        $data['room_id'] = $_POST['room'];
+        $data['arrive'] = $_POST['arrive'];
+        $data['depart'] = $_POST['depart'];
+        $data['booking_status'] = $_POST['booking_status'];
 
         $this->model->editSave($data);
         header('location: ' . URL . $this->path);

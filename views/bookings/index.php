@@ -1,70 +1,107 @@
 <div class="jumbotron jumbotron-fluid loggedin">
-    <h2>Reservationen</h2>
-    <form action="<?php echo URL; ?>rollmaterial/create" method="post">
-        <label for="number">Nummer:<span class="required-star">*</span></label><input type="text" id="number" name="number"><br>
-        <label for="type">Typ:<span class="required-star">*</span></label>
-        <select name="type" id="type">
-            <option value="2">Waggon</option>
-            <option value="1">Lokomotive</option>
-        </select><br>
-        <label for="date_of_commissioning">Erste Inbetriebnahme:<span class="required-star">*</span></label><input type="text" id="date_of_commissioning" name="date_of_commissioning"><br>
-        <label for="date_of_last_revision">Letzte Revision:<span class="required-star">*</span></label><input type="text" id="date_of_last_revision" name="date_of_last_revision"><br>
-        <label for="date_of_next_revision">Nächste Revision:<span class="required-star">*</span></label><input type="text" id="date_of_next_revision" name="date_of_next_revision"><br>
-        <label for="class">Klasse:<span class="required-star">*</span></label>
-        <select name="class" id="class">
-            <option value="0">Keine</option>
-            <option value="1">1. Klasse</option>
-            <option value="2">2. Klasse</option>
-        </select><br>
-        <label for="seating">Sitzplätze:<span class="required-star">*</span></label><input type="number" id="seating" name="seating" value="0" min="0"><br>
-        <label for="availability">Verfügbar:<span class="required-star">*</span></label>
-        <select name="availability" id="availability">
-            <option value="1">Ja</option>
-            <option value="0">Nein</option>
-        </select><br>
+    <h2>Buchung erstellen</h2>
+    <form action="<?php echo URL; ?>bookings/create" method="post">
+        <fieldset>
+            <legend>1. Person</legend>
+            <label for="guest">Gast 1</label>
+            <select name="guest" id="guest">
+                <option value="">--- Gast 1 wählen</option>
+                <?php
+                foreach ($this->setGuests as $key => $value) {
+                    echo "<option value='$value[guest_id]'>$value[guest]</option>";
+                }
+                ?>
+            </select><br>
+            <label for="salutation">Anrede<span class="required-star">*</span></label>
+            <select name="salutation" id="salutation">
+                <option value="0">Herr</option>
+                <option value="1">Frau</option>
+            </select><br>
+            <label for="firstname">Vorname<span class="required-star">*</span></label><input type="text" id="firstname" name="firstname" autocomplete="no"><br>
+            <label for="lastname">Nachname<span class="required-star">*</span></label><input type="text" id="lastname" name="lastname" autocomplete="no"><br>
+            <label for="birthday">Geburtsdatum<span class="required-star">*</span></label><input type="text" id="birthday" name="birthday" autocomplete="no"><br>
+            <label for="identity">Pass/ID<span class="required-star">*</span></label><input type="text" id="identity" name="identity" autocomplete="no"><br>            
+            </fieldset>
+            <fieldset>
+            <legend>2. Person</legend>
+            <label for="guest2">Gast 2</label>
+            <select name="guest2" id="guest2">
+                <option value="">--- Gast 2 wählen</option>
+                <?php
+                foreach ($this->setGuests as $key => $value) {
+                    echo "<option value='$value[guest_id]'>$value[guest]</option>";
+                }
+                ?>
+            </select><br>
+            <label for="salutation2">Anrede</label>
+            <select name="salutation2" id="salutation2">
+                <option value="0">Herr</option>
+                <option value="1">Frau</option>
+            </select><br>
+            <label for="firstname2">Vorname</label><input type="text" id="firstname2" name="firstname2" autocomplete="no"><br>
+            <label for="lastname2">Nachname</label><input type="text" id="lastname2" name="lastname2" autocomplete="no"><br>
+            <label for="birthday2">Geburtsdatum</label><input type="text" id="birthday2" name="birthday2" autocomplete="no"><br>
+            <label for="identity2">Pass/ID</label><input type="text" id="identity2" name="identity2" autocomplete="no"><br>
+            </fieldset>
+            <hr>
+            <label for="room">Zimmer<span class="required-star">*</span></label>
+            <select name="room" id="room">
+                <option value="">--- Zimmer wählen</option>
+                <?php
+                foreach ($this->setFreeRooms as $key => $value) {
+                    echo "<option value='$value[room_id]'>$value[room]</option>";
+                }
+                ?>
+            </select><br>
+            <label for="arrive">Check-In<span class="required-star">*</span></label><input type="text" id="arrive" name="arrive" autocomplete="no"><br>
+            <label for="depart">Check-Out<span class="required-star">*</span></label><input type="text" id="depart" name="depart" autocomplete="no"><br>
+        </fieldset>
         <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Speichern</button>
     </form>
     <hr>
-    <h2>Rollmaterial</h2>
+    <h2>Buchungen</h2>
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
                 <th>Nr.</td>
-                <th>Nummer</td>
-                <th>Typ</td>
-                <th>Erste Inbetriebnahme</td>
-                <th>Letzte Revision</td>
-                <th>Nächste Revision</td>
-                <th>Klasse</td>
-                <th>Sitzplätze</td>
-                <th>Verfügbar</td>
+                <th>Buchungs-Nummer</td>
+                <th>Gast 1</td>
+                <th>Gast 2</td>
+                <th>Zimmer-Nummer</td>
+                <th>Buchungsstatus</td>
+                <th>Check-In</td>
+                <th>Check-Out</td>
                 <th>Bearbeiten</td>
             </tr>
         </thead>
         <tbody>
             <?php
             $i = 1;
-            foreach ($this->rollmaterialList as $key => $value) {
-                echo '<tr class="'.($value['type'] == 1 && $value['availability'] ? 'lok ' : '').(!$value['availability'] ? 'krank ' : '').(($value['class'] == 1 && $value['type'] != 1) ? 'ferien' : '').'">';
+            foreach ($this->bookingList as $key => $value) {
+                $nr = explode(" ", $value['created']);
+                $booking_nr = str_replace(".", "", $nr[0].$value['booking_id']);
+                echo '<tr class="' .
+                    ($value['category_id'] == 1 ? 'standard' : '') .
+                    ($value['category_id'] == 2 ? 'premium' : '') .
+                    ($value['category_id'] == 3 ? 'suite' : '') .
+                    ($value['booking_status'] == 0 ? ' storno' : '') .
+                    ($value['booking_status'] == 3 ? ' checkout' : '') .
+                    '">';
                 echo '<td>' . $i . '.</td>';
-                echo '<td>' . $value['number'] . '</td>';
-                echo '<td>' . ($value['type'] == 1 ? 'Lokomotive' : 'Waggon') . '</td>';
-                echo '<td>' . $value['date_of_commissioning'] . '</td>';
-                echo '<td>' . $value['date_of_last_revision'] . '</td>';
-                echo '<td>' . $value['date_of_next_revision'] . '</td>';
-                echo '<td>';
-                if ($value['class'] == 0 || $value['type'] == 1) {
-                    echo '-';
-                } else if ($value['class'] == 1) {
-                    echo '1. Klasse';
-                } else {
-                    echo '2. Klasse';
-                }
-                echo '</td>';
-                echo '<td>' . ($value['type'] != 1 ? $value['seating'] : '0') . '</td>';
-                echo '<td>' . ($value['availability'] ? 'Ja' : 'Nein') . '</td>';
-                echo '<td><a class="btn btn-success" href="' . URL . 'rollmaterial/edit/' . $value['rollmaterial_id'] . '"><i class="fas fa-pen"></i></a>';
-                echo '<a class="btn btn-danger delete" href="' . URL . 'rollmaterial/delete/' . $value['rollmaterial_id'] . '"><i class="fas fa-trash"></i></a>';
+                echo '<td>' . $booking_nr . '</td>';
+                echo '<td>' . $value['first_guest'] . '</td>';
+                echo '<td>' . ($value['second_guest'] ? $value['second_guest'] : '-') . '</td>';
+                echo '<td>' . $value['room_number'] . '</td>';
+                echo '<td>' . 
+                    ($value['booking_status'] == 0 ? '<em>Storniert</em>' : '') .
+                    ($value['booking_status'] == 1 ? 'Reserviert' : '') .
+                    ($value['booking_status'] == 2 ? 'Check-In' : '') .
+                    ($value['booking_status'] == 3 ? 'Check-Out' : '') .
+                    '</td>';
+                echo '<td>' . $value['arrive'] . '</td>';
+                echo '<td>' . $value['depart'] . '</td>';
+                echo '<td><a class="btn btn-success" href="' . URL . 'bookings/edit/' . $value['booking_id'] . '"><i class="fas fa-pen"></i></a>';
+                echo '<a class="btn btn-danger delete" href="' . URL . 'bookings/delete/' . $value['booking_id'] . '"><i class="fas fa-trash"></i></a>';
                 echo '</td>';
                 echo '</tr>';
                 $i++;
@@ -73,7 +110,7 @@
         </tbody>
     </table>
     <label><strong>Legende</strong></label><br>
-    <label class="lok">Lokomotive</label>
-    <label class="ferien">1. Klasse Waggon</label>
-    <label class="krank">Nicht verfügbar</label>
+    <label class="suite">Suite</label>
+    <label class="premium">Premium</label>
+    <label class="standard">Standard</label>
 </div>

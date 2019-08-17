@@ -1,53 +1,42 @@
 <div class="jumbotron jumbotron-fluid loggedin">
-    <h2>Rollmaterial <strong><?php echo $this->rollmaterial[0]['number']; ?></strong> bearbeiten</h2>
-    <form action="<?php echo URL; ?>rollmaterial/editSave/<?php echo $this->rollmaterial[0]['rollmaterial_id']; ?>" method="post">
-    <label for="number">Nummer:<span class="required-star">*</span></label><input type="text" id="number" name="number" value="<?php echo $this->rollmaterial[0]['number']; ?>"><br>
-        <label for="type">Typ:<span class="required-star">*</span></label>
-        <select name="type" id="type">
-        <?php
-        for ($i=1; $i < 3; $i++) {
-            echo "<option value='$i'";
-            if ($this->rollmaterial[0]['type'] == $i) {
-                echo 'selected';
-            }
-            echo '>';
-            if ($i == 1) {
-                echo 'Lokomotive';
-            } else {
-                echo 'Waggon';
-            }
-            echo "</option>";
-        }
-        ?>
-        </select><br>
-        <label for="date_of_commissioning">Erste Inbetriebnahme:<span class="required-star">*</span></label><input type="text" id="date_of_commissioning" name="date_of_commissioning" value="<?php echo $this->rollmaterial[0]['date_of_commissioning']; ?>"><br>
-        <label for="date_of_last_revision">Letzte Revision:<span class="required-star">*</span></label><input type="text" id="date_of_last_revision" name="date_of_last_revision" value="<?php echo $this->rollmaterial[0]['date_of_last_revision']; ?>"><br>
-        <label for="date_of_next_revision">Nächste Revision:<span class="required-star">*</span></label><input type="text" id="date_of_next_revision" name="date_of_next_revision" value="<?php echo $this->rollmaterial[0]['date_of_next_revision']; ?>"><br>
-        <label for="class">Klasse:<span class="required-star">*</span></label>
-        <select name="class" id="class">
+    <h2>Reservation <strong><?php echo str_replace(".", "", $this->bookings[0]['created']) . $this->bookings[0]['booking_id']; ?></strong> bearbeiten</h2>
+    <form action="<?php echo URL; ?>bookings/editSave/<?php echo $this->bookings[0]['booking_id']; ?>" method="post">
+    <label for="guest">Gast 1</label>
+        <select name="guest" id="guest">
             <?php
-            for ($i=0; $i < 3; $i++) {
-                echo "<option value='$i'";
-                if ($this->rollmaterial[0]['class'] == $i) {
-                    echo 'selected';
-                }
-                echo '>';
-                if ($i == 0) {
-                    echo '-';
-                } else if ($i == 1) {
-                    echo '1. Klasse';
-                } else {
-                    echo '2. Klasse';
-                }
-                echo "</option>";
+            foreach ($this->setGuests as $key => $value) {
+                $selected = ($value['guest_id'] == $this->bookings[0]['guest1_id']) ? 'selected' : '';
+                echo "<option $selected value='$value[guest_id]'>$value[guest]</option>";
             }
             ?>
         </select><br>
-        <label for="seating">Sitzplätze:<span class="required-star">*</span></label><input type="number" id="seating" name="seating" value="<?php echo $this->rollmaterial[0]['seating']; ?>"><br>
-        <label for="availability">Verfügbar:<span class="required-star">*</span></label>
-        <select name="availability" id="availability">
-            <option value="1" <?php echo ($this->rollmaterial[0]['availability'] == 1) ? 'selected' : '' ?>>Ja</option>
-            <option value="0" <?php echo ($this->rollmaterial[0]['availability'] == 0) ? 'selected' : '' ?>>Nein</option>
+        <label for="guest2">Gast 2</label>
+        <select name="guest2" id="guest2">
+            <?php
+            echo ($this->bookings[0]['guest2_id'] == 0) ? '<option value="">--- Gast 2 wählen</option>' : '';
+            foreach ($this->setGuests as $key => $value) {
+                $selected = ($value['guest_id'] == $this->bookings[0]['guest2_id']) ? 'selected' : '';
+                echo "<option $selected value='$value[guest_id]'>$value[guest]</option>";
+            }
+            ?>
+        </select><br>
+        <label for="room">Zimmer</label>
+        <select name="room" id="room">
+            <?php
+            echo "<option value='" . $this->setBookedRoom[0]['room_id'] . "'>" . $this->setBookedRoom[0]['room'] . "</option>";
+            foreach ($this->setFreeRooms as $key => $value) {
+                $selected = ($value['room_id'] == $this->bookings[0]['room_id']) ? 'selected' : '';
+                echo "<option $selected value='$value[room_id]'>$value[room]</option>";
+            }
+            ?>
+        </select><br>
+        <label for="arrive">Check-In<span class="required-star">*</span></label><input value="<?php echo $this->bookings[0]['arrive']; ?>" type="text" id="arrive" name="arrive" autocomplete="no"><br>
+        <label for="depart">Check-Out<span class="required-star">*</span></label><input value="<?php echo $this->bookings[0]['depart']; ?>" type="text" id="depart" name="depart" autocomplete="no"><br>
+        <label for="booking_status">Buchungs Status</label>
+        <select name="booking_status" id="booking_status">
+            <option <?php echo ($this->bookings[0]['booking_status'] == 0) ? 'selected' : ''; ?> value="0">Gelöscht</option>
+            <option <?php echo ($this->bookings[0]['booking_status'] == 1) ? 'selected' : ''; ?> value="1">Reserviert</option>
+            <option <?php echo ($this->bookings[0]['booking_status'] == 2) ? 'selected' : ''; ?> value="2">Bezahlt</option> 
         </select><br>
         <a class="btn btn-primary" href="javascript:history.back();"><i class="fas fa-chevron-left"></i> Zurück</a>
         <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Speichern</button>

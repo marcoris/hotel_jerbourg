@@ -32,7 +32,7 @@ h2 {
 }
 
 body {
-    background: white;
+    background-color: #343a40 !important;
 }
 
 .header {
@@ -54,7 +54,7 @@ body {
 }
 
 .bg-lok {
-    background-image: url('../images/lok3.jpg');
+    background-image: url('../images/hotel.jpg');
 }
 
 .wrap {
@@ -200,4 +200,5 @@ tr.checkout {
 .footer {
     padding: 20px;
     border-top: 2px solid #ddd;
+    color: white;
 }

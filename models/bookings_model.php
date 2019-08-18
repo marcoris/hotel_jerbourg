@@ -2,6 +2,9 @@
 
 class Bookings_Model extends Model
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -10,7 +13,8 @@ class Bookings_Model extends Model
     /**
      * Checks if a booking is older than 5 days -> set booking status to deleted
      * and set room to free
-     *
+     * 
+     * @return void
      */
     public function checkBookings()
     {
@@ -21,8 +25,7 @@ class Bookings_Model extends Model
             FROM
                 bookings
             WHERE
-                booking_status != 3 AND
-                deleted IS NULL'
+                booking_status = 1'
         );
 
         for ($i = 0; $i < count($created); $i++) {
@@ -30,7 +33,7 @@ class Bookings_Model extends Model
                 // set booking status to deleted
                 $updateArray = array(
                     'booking_status' => 0,
-                    'updated' => date("d.m.Y H:i:s")
+                    'updated' => date("Y-m-d H:i:s")
                 );
         
                 $this->db->update('bookings', $updateArray, "created='{$created[$i]['created']}'");
@@ -38,7 +41,7 @@ class Bookings_Model extends Model
                 // set room status to free
                 $updateArray = array(
                     'room_status' => 0,
-                    'updated' => date("d.m.Y H:i:s")
+                    'updated' => date("Y-m-d H:i:s")
                 );
         
                 $this->db->update('rooms', $updateArray, "room_id={$created[$i]['room_id']}");
@@ -125,9 +128,7 @@ class Bookings_Model extends Model
                 bookings
                 JOIN guests AS g1 ON (bookings.guest1_id = g1.guest_id)
                 LEFT JOIN guests AS g2 ON (bookings.guest2_id = g2.guest_id)
-                JOIN rooms ON (rooms.room_id = bookings.room_id)
-            WHERE
-                bookings.deleted IS NULL'
+                JOIN rooms ON (rooms.room_id = bookings.room_id)'
         );
     }
 
@@ -154,7 +155,7 @@ class Bookings_Model extends Model
                 'lastname' => $data['lastname'],
                 'birthday' => $data['birthday'],
                 'identity' => $data['identity'],
-                'created' => date("d.m.Y H:i:s")
+                'created' => date("Y-m-d H:i:s")
             );
     
             $this->db->insert('guests', $insertArray);
@@ -183,7 +184,7 @@ class Bookings_Model extends Model
                 'lastname' => $data['lastname2'],
                 'birthday' => $data['birthday2'],
                 'identity' => $data['identity2'],
-                'created' => date("d.m.Y H:i:s")
+                'created' => date("Y-m-d H:i:s")
             );
     
             $this->db->insert('guests', $insertArray2);
@@ -201,7 +202,7 @@ class Bookings_Model extends Model
             'arrive' => $data['arrive'],
             'depart' => $data['depart'],
             'booking_status' => 1,
-            'created' => date("d.m.Y H:i:s")
+            'created' => date("Y-m-d H:i:s")
         );
 
         // create booking
@@ -210,7 +211,7 @@ class Bookings_Model extends Model
         // update room status to reserved
         $updateArray = array(
             'room_status' => 1,
-            'updated' => date("d.m.Y H:i:s")
+            'updated' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('rooms', $updateArray, "room_id={$data[room_id]}");
@@ -256,7 +257,7 @@ class Bookings_Model extends Model
             'arrive' => $data['arrive'],
             'depart' => $data['depart'],
             'booking_status' => $data['booking_status'],
-            'updated' => date("d.m.Y H:i:s")
+            'updated' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('bookings', $updateArray, "booking_id={$data['booking_id']}");
@@ -282,7 +283,7 @@ class Bookings_Model extends Model
         // set booking status to deleted
         $updateArray = array(
             'booking_status' => 0,
-            'deleted' => date("d.m.Y H:i:s")
+            'deleted' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('bookings', $updateArray, "booking_id='$id'");
@@ -290,7 +291,7 @@ class Bookings_Model extends Model
         // set room status to free
         $updateArray2 = array(
             'room_status' => 0,
-            'updated' => date("d.m.Y H:i:s")
+            'updated' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('rooms', $updateArray2, "room_id={$roomID[0][room_id]}");

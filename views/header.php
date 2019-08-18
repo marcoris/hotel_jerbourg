@@ -9,7 +9,7 @@
     <link rel='stylesheet' href='<?php echo URL; ?>public/fontawesome/css/all.css'>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
-    <title>Hotel Jerbourg Bretagne</title>
+    <title>Hotel Jerbourg - Bretagne</title>
 </head>
 <body>
     <div class="header">

@@ -7,6 +7,8 @@ apt-get update
 # Upgrade Packages
 apt-get dist-upgrade
 
+sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
 # Apache
 apt-get install -y apache2
 

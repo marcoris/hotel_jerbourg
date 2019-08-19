@@ -35,6 +35,9 @@ sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'hotel'@'localhost' WITH GRANT OPT
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS hotel;"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
+# Disable only full GROUP BY
+sudo mysql -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+
 # Restart Apache
 sudo systemctl restart apache2.service
 
@@ -44,6 +47,3 @@ sudo mysql hotel < /var/www/html/sql/categories.sql
 sudo mysql hotel < /var/www/html/sql/employees.sql
 sudo mysql hotel < /var/www/html/sql/guests.sql
 sudo mysql hotel < /var/www/html/sql/rooms.sql
-
-# Disable only full GROUP BY
-sudo mysql > SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));

@@ -15,9 +15,9 @@ class Bookings extends Controller
 
         // Check authority and forward user to login page if user dont have permission
         Auth::check();
-        $usergroup = Session::get('usergroup');
+        $role = Session::get('role');
 
-        if ($usergroup > 2) {
+        if ($role > 2) {
             header('location: ' . URL . 'login');
         }
 

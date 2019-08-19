@@ -24,7 +24,9 @@
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>bookings">Buchungen</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>guests">Gäste</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>hitlist">Hitliste</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>sales">Umsatz</a></li>
+                        <?php if (Session::get('role') == 1) : ?>
+                            <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>sales">Umsatz</a></li>
+                        <?php endif; ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>login/logout">Logout (<?php echo $_SESSION['login']; ?>)</a></li>
                     <?php else : ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>login">Login</a></li>

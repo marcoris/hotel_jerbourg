@@ -28,10 +28,6 @@ DROP TABLE IF EXISTS `employee`;
 CREATE TABLE `employee` (
   `employee_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `role` int(11) DEFAULT NULL,
-  `personalnumber` varchar(50) DEFAULT NULL,
-  `salutation` varchar(11) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) DEFAULT NULL,
   `login` varchar(50) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`employee_id`)
@@ -40,10 +36,10 @@ CREATE TABLE `employee` (
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 
-INSERT INTO `employee` (`employee_id`, `role`, `personalnumber`, `salutation`, `firstname`, `lastname`, `login`, `password`)
+INSERT INTO `employee` (`employee_id`, `role`, `login`, `password`)
 VALUES
-	(1,1,'123','1','Marco','Ris','Marco','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9'),
-	(2,2,'456','1','Hotel','Manager','Hotelmanager','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9');
+	(1,2,'Marco','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9'),
+	(2,1,'Hotelmanager','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9');
 
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;

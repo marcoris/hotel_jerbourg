@@ -29,7 +29,7 @@ class Hitlist_Model extends Model
             GROUP BY
                 guest_name
             ORDER BY
-                counts DESC'
+                counts DESC, guest_name'
         );
     }
 }

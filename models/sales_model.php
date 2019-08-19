@@ -31,7 +31,8 @@ class Sales_Model extends Model
                 JOIN categories ON (categories.category_id = rooms.category_id)
             WHERE
                 bookings.booking_status = 2 OR
-                bookings.booking_status = 3
+                bookings.booking_status = 3 OR
+                bookings.booking_status = 4
             GROUP BY
                 month, categories.category_id
             ORDER BY year DESC, month DESC, category_id DESC'

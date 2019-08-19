@@ -15,7 +15,7 @@ class Sales extends Controller
 
         // Check authority and forward user to login page if user dont have permission
         Auth::check();
-        if (Session::get('usergroup') > 2) {
+        if (Session::get('role') > 1) {
             header('location: ' . URL . 'login');
         }
     }

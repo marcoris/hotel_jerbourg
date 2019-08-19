@@ -267,7 +267,7 @@ class Bookings_Model extends Model
 
         // set room status
         $updateArray2 = array(
-            'room_status' => 1,
+            'room_status' => ($data['booking_status'] == 0 || $data['booking_status'] == 4 ? 0 : 1),
             'updated' => date("Y-m-d H:i:s")
         );
 

@@ -15,7 +15,7 @@ class Hitlist extends Controller
 
         // Check authority and forward user to login page if user dont have permission// Check authority and forward user to login page if user dont have permission
         Auth::check();
-        if (Session::get('usergroup') > 2) {
+        if (Session::get('role') > 2) {
             header('location: ' . URL . 'login');
         }
     }

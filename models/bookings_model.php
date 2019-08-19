@@ -98,13 +98,13 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 rooms.room_id,
-                CONCAT(room_number, " > ", cat.category, " (CHF ", cat.price, ".- / Nacht)") AS room
+                CONCAT(room_number, " > ", categories.category, " (CHF ", categories.price, ".- / Nacht)") AS room
             FROM
                 rooms
-                JOIN categories AS cat ON (cat.category_id = rooms.category_id)
-                JOIN bookings AS book ON (book.room_id = rooms.room_id)
+                JOIN categories ON (categories.category_id = rooms.category_id)
+                JOIN bookings ON (bookings.room_id = rooms.room_id)
             WHERE
-                book.booking_id = :id', array(':id' => $id)
+            bookings.booking_id = :id', array(':id' => $id)
         );
     }
     

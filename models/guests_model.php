@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * Guests model class extends from model class
+ */
 class Guests_Model extends Model
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -44,7 +49,7 @@ class Guests_Model extends Model
             'lastname' => $data['lastname'],
             'birthday' => $data['birthday'],
             'identity' => $data['identity'],
-            'created' => date("d.m.Y H:i:s")
+            'created' => NOW()
         );
         
         // insert guest
@@ -90,7 +95,7 @@ class Guests_Model extends Model
             'lastname' => $data['lastname'],
             'birthday' => $data['birthday'],
             'identity' => $data['identity'],
-            'updated' => date("d.m.Y H:i:s")
+            'updated' => NOW()
         );
         $this->db->update('guests', $updateArray, "`guest_id`={$data['guest_id']}");
     }
@@ -99,11 +104,13 @@ class Guests_Model extends Model
      * Sets the affected guest deleted
      *
      * @param int $id The affected id
+     * 
+     * @return void
      */
     public function delete($id)
     {
         $updateArray = array(
-            'deleted' => date("d.m.Y H:i:s")
+            'deleted' => NOW()
         );
         $this->db->update('guests', $updateArray, "`guest_id`=$id");
     }

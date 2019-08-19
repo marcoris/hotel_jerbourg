@@ -79,7 +79,7 @@
             $i = 1;
             foreach ($this->bookingList as $key => $value) {
                 $nr = explode(" ", $value['created']);
-                $booking_nr = str_replace("-", "", $nr[0].$value['booking_id']);
+                $booking_nr = str_replace("-", "", $nr[0] . $value['booking_id']);
                 echo '<tr class="' .
                     ($value['category_id'] == 1 ? 'standard' : '') .
                     ($value['category_id'] == 2 ? 'premium' : '') .

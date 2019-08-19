@@ -23,7 +23,7 @@ apt-get install -y php7.2
 apt-get install -y libapache2-mod-php7.2
 
 # Restart Apache
-service apache2 restart
+systemctl restart apache2.service
 
 # PHP-MYSQL lib
 apt-get install -y mysql-server
@@ -33,18 +33,14 @@ apt-get install -y php7.2-mysql
 sudo mysql -e "CREATE USER IF NOT EXISTS 'hotel'@'localhost';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'hotel'@'localhost' WITH GRANT OPTION;"
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS hotel;"
-sudo service mysql restart
+sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Restart Apache
 sudo systemctl restart apache2.service
 
 # Import bootstrap SQL
-sudo mysql hotel < /var/www/html/sql/employee.sql
-sudo mysql hotel < /var/www/html/sql/line.sql
-sudo mysql hotel < /var/www/html/sql/rollmaterial.sql
-sudo mysql hotel < /var/www/html/sql/station_to_line.sql
-sudo mysql hotel < /var/www/html/sql/station.sql
-sudo mysql hotel < /var/www/html/sql/useplan_to_employee.sql
-sudo mysql hotel < /var/www/html/sql/useplan_to_line.sql
-sudo mysql hotel < /var/www/html/sql/useplan_to_rollmaterial.sql
-sudo mysql hotel < /var/www/html/sql/useplan.sql
+sudo mysql hotel < /var/www/html/sql/bookings.sql
+sudo mysql hotel < /var/www/html/sql/categories.sql
+sudo mysql hotel < /var/www/html/sql/employees.sql
+sudo mysql hotel < /var/www/html/sql/guests.sql
+sudo mysql hotel < /var/www/html/sql/rooms.sql

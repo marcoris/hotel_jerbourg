@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Sales model class extends from model class
+ */
 class Sales_Model extends Model
 {
     /**

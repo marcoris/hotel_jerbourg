@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.7.25-0ubuntu0.18.04.2)
-# Datenbank: loag
-# Erstellt am: 2019-03-15 10:36:35 +0000
+# Host: co-srv-xdberp1.contria.net (MySQL 5.6.27-log)
+# Datenbank: hotel
+# Erstellt am: 2019-08-19 08:22:10 +0000
 # ************************************************************
 
 
@@ -20,35 +20,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Export von Tabelle useplan_to_line
+# Export von Tabelle employee
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `useplan_to_line`;
+DROP TABLE IF EXISTS `employee`;
 
-CREATE TABLE `useplan_to_line` (
-  `useplan_id` int(11) DEFAULT NULL,
-  `line_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `employee` (
+  `employee_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `role` int(11) DEFAULT NULL,
+  `personalnumber` varchar(50) DEFAULT NULL,
+  `salutation` varchar(11) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `login` varchar(50) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `useplan_to_line` WRITE;
-/*!40000 ALTER TABLE `useplan_to_line` DISABLE KEYS */;
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
 
-INSERT INTO `useplan_to_line` (`useplan_id`, `line_id`)
+INSERT INTO `employee` (`employee_id`, `role`, `personalnumber`, `salutation`, `firstname`, `lastname`, `login`, `password`)
 VALUES
-	(1,2),
-	(2,5),
-	(3,3),
-	(4,2),
-	(5,3),
-	(6,4),
-	(7,5),
-	(8,2),
-	(9,5),
-	(10,5),
-	(11,2),
-	(12,3);
+	(1,1,'123','1','Marco','Ris','Marco','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9'),
+	(2,2,'456','1','Hotel','Manager','Hotelmanager','599fc64fff9cddeab77e2678f22b8e2199c41f2dff6f7ae5d33fb3f6be5a8ad9');
 
-/*!40000 ALTER TABLE `useplan_to_line` ENABLE KEYS */;
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.7.25-0ubuntu0.18.04.2)
-# Datenbank: loag
-# Erstellt am: 2019-03-15 10:31:39 +0000
+# Host: co-srv-xdberp1.contria.net (MySQL 5.6.27-log)
+# Datenbank: hotel
+# Erstellt am: 2019-08-19 08:21:41 +0000
 # ************************************************************
 
 
@@ -20,29 +20,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Export von Tabelle line
+# Export von Tabelle categories
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `line`;
+DROP TABLE IF EXISTS `categories`;
 
-CREATE TABLE `line` (
-  `line_id` int(11) NOT NULL AUTO_INCREMENT,
-  `line_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`line_id`)
+CREATE TABLE `categories` (
+  `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `category` varchar(50) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `line` WRITE;
-/*!40000 ALTER TABLE `line` DISABLE KEYS */;
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 
-INSERT INTO `line` (`line_id`, `line_name`)
+INSERT INTO `categories` (`category_id`, `category`, `price`)
 VALUES
-	(1,'-'),
-	(2,'Linie 1'),
-	(3,'Linie 2'),
-	(4,'Linie 3'),
-	(5,'Linie 4');
+	(1,'Standard',100),
+	(2,'Premium',200),
+	(3,'Suite',300);
 
-/*!40000 ALTER TABLE `line` ENABLE KEYS */;
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

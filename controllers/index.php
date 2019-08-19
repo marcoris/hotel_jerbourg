@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * Index class extends controller
+ */
 class Index extends Controller
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -9,6 +14,8 @@ class Index extends Controller
 
     /**
      * Call render function
+     * 
+     * @return void
      */
     public function index()
     {
@@ -17,6 +24,8 @@ class Index extends Controller
 
     /**
      * Call render function
+     * 
+     * @return void
      */
     public function error()
     {

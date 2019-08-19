@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Sales class extends controller
+ */
 class Sales extends Controller
 {
     private $_path = 'sales';
@@ -10,6 +12,8 @@ class Sales extends Controller
     public function __construct()
     {
         parent::__construct();
+
+        // Check authority and forward user to login page if user dont have permission
         Auth::check();
         if (Session::get('usergroup') > 2) {
             header('location: ' . URL . 'login');

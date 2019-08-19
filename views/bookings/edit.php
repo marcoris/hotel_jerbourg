@@ -37,6 +37,7 @@
             <option <?php echo ($this->booking[0]['booking_status'] == 0) ? 'selected' : ''; ?> value="0">Gelöscht</option>
             <option <?php echo ($this->booking[0]['booking_status'] == 1) ? 'selected' : ''; ?> value="1">Reserviert</option>
             <option <?php echo ($this->booking[0]['booking_status'] == 2) ? 'selected' : ''; ?> value="2">Bezahlt</option> 
+            <option <?php echo ($this->booking[0]['booking_status'] == 3) ? 'selected' : ''; ?> value="3">Check-Out</option> 
         </select><br>
         <a class="btn btn-primary" href="javascript:history.back();"><i class="fas fa-chevron-left"></i> Zurück</a>
         <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Speichern</button>

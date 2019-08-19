@@ -21,12 +21,10 @@
             <div class="navbar-collapse collapse" id="navbarCollapse" style="">
                 <ul class="navbar-nav mr-auto">
                     <?php if (Session::get('loggedIn')) : ?>
-                        <?php if (Session::get('usergroup') < 3) : ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>bookings">Buchungen</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>guests">Gäste</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>hitlist">Hitliste</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>sales">Umsatz</a></li>
-                        <?php endif; ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>login/logout">Logout (<?php echo $_SESSION['login']; ?>)</a></li>
                     <?php else : ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo URL; ?>login">Login</a></li>

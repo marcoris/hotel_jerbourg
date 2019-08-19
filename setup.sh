@@ -44,3 +44,6 @@ sudo mysql hotel < /var/www/html/sql/categories.sql
 sudo mysql hotel < /var/www/html/sql/employees.sql
 sudo mysql hotel < /var/www/html/sql/guests.sql
 sudo mysql hotel < /var/www/html/sql/rooms.sql
+
+# Disable only full GROUP BY
+sudo mysql > SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));

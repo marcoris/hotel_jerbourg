@@ -49,7 +49,7 @@ class Guests_Model extends Model
             'lastname' => $data['lastname'],
             'birthday' => $data['birthday'],
             'identity' => $data['identity'],
-            'created' => NOW()
+            'created' => date("Y-m-d H:i:s")
         );
         
         // insert guest
@@ -95,7 +95,7 @@ class Guests_Model extends Model
             'lastname' => $data['lastname'],
             'birthday' => $data['birthday'],
             'identity' => $data['identity'],
-            'updated' => NOW()
+            'updated' => date("Y-m-d H:i:s")
         );
         $this->db->update('guests', $updateArray, "`guest_id`={$data['guest_id']}");
     }
@@ -110,7 +110,7 @@ class Guests_Model extends Model
     public function delete($id)
     {
         $updateArray = array(
-            'deleted' => NOW()
+            'deleted' => date("Y-m-d H:i:s")
         );
         $this->db->update('guests', $updateArray, "`guest_id`=$id");
     }

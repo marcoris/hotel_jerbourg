@@ -31,11 +31,11 @@ class Bookings_Model extends Model
         );
 
         for ($i = 0; $i < count($created); $i++) {
-            if ((strtotime($created[$i]['created']) + (60*60*24*1)) < time()) {
+            if ((strtotime($created[$i]['created']) + (60*60*24*5)) < time()) {
                 // set booking status to deleted
                 $updateArray = array(
                     'booking_status' => 0,
-                    'updated' => NOW()
+                    'updated' => date("Y-m-d H:i:s")
                 );
         
                 $this->db->update('bookings', $updateArray, "created='{$created[$i]['created']}'");
@@ -43,7 +43,7 @@ class Bookings_Model extends Model
                 // set room status to free
                 $updateArray = array(
                     'room_status' => 0,
-                    'updated' => NOW()
+                    'updated' => date("Y-m-d H:i:s")
                 );
         
                 $this->db->update('rooms', $updateArray, "room_id={$created[$i]['room_id']}");
@@ -159,7 +159,7 @@ class Bookings_Model extends Model
                 'lastname' => $data['lastname'],
                 'birthday' => $data['birthday'],
                 'identity' => $data['identity'],
-                'created' => NOW()
+                'created' => date("Y-m-d H:i:s")
             );
     
             $this->db->insert('guests', $insertArray);
@@ -257,13 +257,21 @@ class Bookings_Model extends Model
             'guest1_id' => $data['guest1_id'],
             'guest2_id' => $data['guest2_id'],
             'room_id' => $data['room_id'],
+            'booking_status' => $data['booking_status'],
             'arrive' => $data['arrive'],
             'depart' => $data['depart'],
-            'booking_status' => $data['booking_status'],
             'updated' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('bookings', $updateArray, "booking_id={$data['booking_id']}");
+
+        // set room status
+        $updateArray2 = array(
+            'room_status' => 1,
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        $this->db->update('rooms', $updateArray2, "room_id={$data['room_id']}");
     }
 
     /**

@@ -122,7 +122,7 @@ class Bookings extends Controller
         $data = array();
         $data['booking_id'] = $id;
         $data['guest1_id'] = $_POST['guest'];
-        $data['guest2_id'] = $_POST['guest2'];
+        $data['guest2_id'] = !empty($_POST['guest2']) ? $_POST['guest2'] : 0;
         $data['room_id'] = $_POST['room'];
         $data['arrive'] = $_POST['arrive'];
         $data['depart'] = $_POST['depart'];

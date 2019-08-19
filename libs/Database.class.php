@@ -1,20 +1,33 @@
 <?php
-
+/**
+ * Database class extends from PDO class
+ */
 class Database extends PDO
 {
+    /**
+     * Constructor
+     * 
+     * @param string $DB_TYPE Type of Connection
+     * @param string $DB_HOST Hostname
+     * @param string $DB_NAME Database name
+     * @param string $DB_USER Database user
+     * @param string $DB_PASS Database password
+     * 
+     * @return void
+     */
     public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS)
     {
-        parent::__construct($DB_TYPE.':host='.$DB_HOST.';dbname='.$DB_NAME, $DB_USER, $DB_PASS);
+        parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
     }
 
     /**
      * The PDO SELECT function
      *
-     * @param string $table The affected table
-     * @param array $data The data
+     * @param string $sql The sql query
+     * @param array $data The data array
      * @param class $fetchMode The mode to fetch the data
      * 
-     * @return mixed
+     * @return array The return array
      */
     public function select($sql, $data = array(), $fetchMode = PDO::FETCH_ASSOC)
     {
@@ -24,6 +37,7 @@ class Database extends PDO
             $stmt->bindValue("$key", $value);
         }
 
+        // There was an error -> output the SQL error
         if (!$stmt->execute()) {
             echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
@@ -38,6 +52,8 @@ class Database extends PDO
      *
      * @param string $table The affected table
      * @param array $data The data
+     * 
+     * @return void
      */
     public function insert($table, $data = array())
     {
@@ -52,6 +68,7 @@ class Database extends PDO
             $stmt->bindValue(":$key", $value);
         }
         
+        // There was an error -> output the SQL error
         if (!$stmt->execute()) {
             echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
@@ -65,6 +82,8 @@ class Database extends PDO
      * @param string $table The affected table
      * @param array $data The data
      * @param string $where The WHERE string to search into
+     * 
+     * @return void
      */
     public function update($table, $data = array(), $where)
     {
@@ -84,6 +103,7 @@ class Database extends PDO
             $stmt->bindValue(":$key", $value);
         }
         
+        // There was an error -> output the SQL error
         if (!$stmt->execute()) {
             echo "SQL Error({$stmt->errorInfo()[1]})<br>";
             echo $stmt->errorInfo()[2];
@@ -95,8 +115,10 @@ class Database extends PDO
      * The PDO DELETE function
      *
      * @param string $table The affected table
-     * @param int $id The affected id to delete
-     * @param int $limit The limit count of deletions
+     * @param integer $where The where conditions
+     * @param integer $limit The limit count of deletions
+     * 
+     * @return void
      */
     public function delete($table, $where, $limit = 1)
     {

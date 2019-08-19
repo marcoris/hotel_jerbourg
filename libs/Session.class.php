@@ -1,9 +1,13 @@
 <?php
-
+/**
+ * Session class
+ */
 class Session
 {
     /**
      * The session start init function
+     * 
+     * @return void
      */
     public static function init()
     {
@@ -17,6 +21,8 @@ class Session
      * 
      * @param string $name the session name
      * @param string $value the session value
+     * 
+     * @return void
      */
     public static function set($name, $value)
     {
@@ -32,14 +38,17 @@ class Session
      */
     public static function get($name)
     {
-        if (isset($_SESSION[$name]))
-        return $_SESSION[$name];
+        if (isset($_SESSION[$name])) {
+            return $_SESSION[$name];
+        }
     }
 
     /**
      * The session destroy function
      * 
      * @param array $destroyArray - The array with session values
+     * 
+     * @return void
      */
     public static function destroy($destroyArray)
     {

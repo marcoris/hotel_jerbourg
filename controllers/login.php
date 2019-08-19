@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * Login class extends controller
+ */
 class Login extends Controller
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -9,6 +14,8 @@ class Login extends Controller
 
     /**
      * Call the render function
+     * 
+     * @return void
      */
     public function index()
     {
@@ -17,6 +24,8 @@ class Login extends Controller
 
     /**
      * Call the login function
+     * 
+     * @return void
      */
     public function login()
     {
@@ -25,6 +34,8 @@ class Login extends Controller
 
     /**
      * Call the logout function
+     * 
+     * @return void
      */
     public function logout()
     {

@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * Hash class
+ */
 class Hash
 {
     /**
      * This function creates a hash for a password
      * 
-     * @param string $data - The string to hash
+     * @param string $data The string to hash
      * 
      * @return hashstring
      */

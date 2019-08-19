@@ -34,9 +34,11 @@
         <label for="depart">Check-Out<span class="required-star">*</span></label><input value="<?php echo $this->booking[0]['depart']; ?>" type="text" id="depart" name="depart" autocomplete="no"><br>
         <label for="booking_status">Buchungs Status</label>
         <select name="booking_status" id="booking_status">
-            <option <?php echo ($this->booking[0]['booking_status'] == 0) ? 'selected' : ''; ?> value="0">Gelöscht</option>
+            <option <?php echo ($this->booking[0]['booking_status'] == 0) ? 'selected' : ''; ?> value="0">Storniert</option>
             <option <?php echo ($this->booking[0]['booking_status'] == 1) ? 'selected' : ''; ?> value="1">Reserviert</option>
-            <option <?php echo ($this->booking[0]['booking_status'] == 2) ? 'selected' : ''; ?> value="2">Bezahlt</option> 
+            <option <?php echo ($this->booking[0]['booking_status'] == 2) ? 'selected' : ''; ?> value="2">Bezahlt</option>
+            <option <?php echo ($this->booking[0]['booking_status'] == 3) ? 'selected' : ''; ?> value="3">Check-In</option> 
+            <option <?php echo ($this->booking[0]['booking_status'] == 4) ? 'selected' : ''; ?> value="4">Check-Out</option> 
         </select><br>
         <a class="btn btn-primary" href="javascript:history.back();"><i class="fas fa-chevron-left"></i> Zurück</a>
         <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Speichern</button>

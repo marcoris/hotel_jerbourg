@@ -1,104 +1,119 @@
 <?php
-
+/**
+ * App class
+ */
 class App
 {
-    private $url = null;
-    private $controller = null;
+    private $_url = null;
+    private $_controller = null;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         // Sets the private $url
-        $this->getUrl();
+        $this->_getUrl();
 
         // Load the default controller if no url is set
-        if (empty($this->url[0])) {
-            $this->loadDefaultController();
+        if (empty($this->_url[0])) {
+            $this->_loadDefaultController();
             return false;
         }
 
         // Load the existing controller if url is set
-        $this->loadExistingController();
+        $this->_loadExistingController();
 
         // Call the controller method
-        $this->callControllerMethod();
+        $this->_callControllerMethod();
     }
 
     /**
      * Fetches the $_GET from url
+     * 
+     * @return void
      */
-    private function getUrl()
+    private function _getUrl()
     {
-        $this->url = isset($_GET['url']) ? $_GET['url'] : null;
-        $this->url = rtrim($this->url, '/');
-        $this->url = filter_var($this->url, FILTER_SANITIZE_URL);
-        $this->url = explode('/',$this->url);
+        $this->_url = isset($_GET['url']) ? $_GET['url'] : null;
+        $this->_url = rtrim($this->_url, '/');
+        $this->_url = filter_var($this->_url, FILTER_SANITIZE_URL);
+        $this->_url = explode('/', $this->_url);
     }
 
     /**
      * This loads if there is no GET parameter passed
+     * 
+     * @return void
      */
-    private function loadDefaultController()
+    private function _loadDefaultController()
     {
-        require 'controllers/index.php';
-        $this->controller = new Index();
-        $this->controller->index();
+        include 'controllers/index.php';
+        $this->_controller = new Index();
+        $this->_controller->index();
     }
 
     /**
      * Load an existing controller if there is a GET parameter passed
      * 
-     * @return boolean|string
+     * @return void
      */
-    private function loadExistingController()
+    private function _loadExistingController()
     {
-        $file = 'controllers/' . $this->url[0] . '.php';
+        $file = 'controllers/' . $this->_url[0] . '.php';
         if (file_exists($file)) {
-            require $file;
-            $this->controller = new $this->url[0];
-            $this->controller->loadModel($this->url[0]);
+            include $file;
+            $this->_controller = new $this->_url[0];
+            $this->_controller->loadModel($this->_url[0]);
         } else {
-            $this->error("Die Seite \"{$this->url[0]}\" existiert nicht!");   
+            $this->error("Die Seite \"{$this->_url[0]}\" existiert nicht!");   
         }
     }
 
     /**
      * If a method is passed in the GET url parameter
+     * 
+     * @return void
      */
-    private function callControllerMethod()
+    private function _callControllerMethod()
     {
         // calling methods output error or load index page
-            if (isset($this->url[3])) {
-                if (method_exists($this->controller, $this->url[1])) {
-                    $this->controller->{$this->url[1]}($this->url[2], $this->url[3]);
+        if (isset($this->_url[3])) {
+            if (method_exists($this->_controller, $this->_url[1])) {
+                $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
+            } else {
+                $this->error("Parameter \"{$this->_url[2]}\" oder \"{$this->_url[3]}\" in \"{$this->_url[1]}\" existiert nicht!");
+            }
+        } elseif (isset($this->_url[2])) {
+            if (method_exists($this->_controller, $this->_url[1])) {
+                $this->_controller->{$this->_url[1]}($this->_url[2]);
+            } else {
+                $this->error("Parameter \"{$this->_url[2]}\" in \"{$this->_url[1]}\" existiert nicht!");
+            }
+        } else {
+            if (isset($this->_url[1])) {
+                if (method_exists($this->_controller, $this->_url[1])) {
+                    $this->_controller->{$this->_url[1]}();
                 } else {
-                    $this->error("Parameter \"{$this->url[2]}\" oder \"{$this->url[3]}\" in \"{$this->url[1]}\" existiert nicht!");
-                }
-            } elseif (isset($this->url[2])) {
-                if (method_exists($this->controller, $this->url[1])) {
-                    $this->controller->{$this->url[1]}($this->url[2]);
-                } else {
-                    $this->error("Parameter \"{$this->url[2]}\" in \"{$this->url[1]}\" existiert nicht!");
+                    $this->error("Methode \"{$this->_url[1]}\" existiert nicht!");
                 }
             } else {
-            if (isset($this->url[1])) {
-                if (method_exists($this->controller, $this->url[1])) {
-                    $this->controller->{$this->url[1]}();
-                } else {
-                    $this->error("Methode \"{$this->url[1]}\" existiert nicht!");
-                }
-            } else {
-                $this->controller->index();
+                $this->_controller->index();
             }
         }
     }
 
     /**
      * This handles the error message
+     * 
+     * @param string $msg The error message
+     * 
+     * @return false
      */
     public function error($msg = '') {
-        require 'controllers/error.php';
-        $this->controller = new ErrorHandler();
-        $this->controller->index($msg);
+        include 'controllers/error.php';
+        $this->_controller = new ErrorHandler();
+        $this->_controller->index($msg);
         return false;
     }
 }

@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * ErrorHandler class
+ */
 class ErrorHandler extends Controller
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -10,7 +15,9 @@ class ErrorHandler extends Controller
     /**
      * Call the render function
      * 
-     * @param string The message to show
+     * @param string $msg The message to show
+     * 
+     * @return void
      */
     public function index($msg)
     {

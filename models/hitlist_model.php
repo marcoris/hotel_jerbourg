@@ -1,16 +1,21 @@
 <?php
-
+/**
+ * Hitlist model class extends from model class
+ */
 class Hitlist_Model extends Model
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
     /**
-     * Shows the list of lines
+     * Gets the hitlist data
      *
-     * @return array The lines list
+     * @return array The hitlist
      */
     public function getHitlist()
     {
@@ -24,7 +29,7 @@ class Hitlist_Model extends Model
             GROUP BY
                 guest_name
             ORDER BY
-                counts DESC'
+                counts DESC, guest_name'
         );
     }
 }

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Bookings controller class extends from controller class
+ */
 class Bookings extends Controller
 {
     private $_path = 'bookings';
@@ -10,10 +12,12 @@ class Bookings extends Controller
     public function __construct()
     {
         parent::__construct();
-        Auth::check();
-        $usergroup = Session::get('usergroup');
 
-        if ($usergroup > 2) {
+        // Check authority and forward user to login page if user dont have permission
+        Auth::check();
+        $role = Session::get('role');
+
+        if ($role > 2) {
             header('location: ' . URL . 'login');
         }
 
@@ -42,6 +46,7 @@ class Bookings extends Controller
      */
     public function create()
     {
+        // array data to return
         $data = array();
 
         // set data if guest select is not set
@@ -58,12 +63,12 @@ class Bookings extends Controller
         }
 
         // set data if guest 2 select is not set
-        if (empty($_POST['guest2']) &&
-            !empty($_POST['salutation2']) &&
-            !empty($_POST['firstname2']) &&
-            !empty($_POST['lastname2']) &&
-            !empty($_POST['birthday2']) &&
-            !empty($_POST['identity2'])
+        if (empty($_POST['guest2'])
+            && !empty($_POST['salutation2'])
+            && !empty($_POST['firstname2'])
+            && !empty($_POST['lastname2'])
+            && !empty($_POST['birthday2'])
+            && !empty($_POST['identity2'])
         ) {
             $data['salutation2'] = $_POST['salutation2'];
             $data['firstname2'] = $_POST['firstname2'];
@@ -78,10 +83,12 @@ class Bookings extends Controller
             }
         }
 
+        // other necessary data
         $data['room_id'] = $_POST['room'];
         $data['arrive'] = $_POST['arrive'];
         $data['depart'] = $_POST['depart'];
 
+        // send the data to the model
         $this->model->create($data);
         header('location: ' . URL . $this->_path);
     }
@@ -115,7 +122,7 @@ class Bookings extends Controller
         $data = array();
         $data['booking_id'] = $id;
         $data['guest1_id'] = $_POST['guest'];
-        $data['guest2_id'] = $_POST['guest2'];
+        $data['guest2_id'] = !empty($_POST['guest2']) ? $_POST['guest2'] : 0;
         $data['room_id'] = $_POST['room'];
         $data['arrive'] = $_POST['arrive'];
         $data['depart'] = $_POST['depart'];

@@ -1,7 +1,12 @@
 <?php
-
+/**
+ * Login model class extends from model class
+ */
 class Login_Model extends Model
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -9,38 +14,28 @@ class Login_Model extends Model
 
     /**
      * Here is the login function to log the user in and sets the necessary data
-     * and forward the user on the dashboard page
+     * and forward the user on the bookings page
+     * 
+     * @return void
      */
     public function login()
     {
-        $stmt = $this->db->prepare(
+        $data = $this->db->select(
             'SELECT
-                employee_id,
-                firstname,
-                lastname,
                 login,
                 role
             FROM
-                employee
+                employees
             WHERE
                 login = :login AND
-                password = :password');
+                password = :password', array(':login' => $_POST['login'], ':password' => Hash::create($_POST['password']))
+        );
 
-        $stmt->execute(array(
-            'login' => $_POST['login'],
-            'password' => Hash::create($_POST['password'])
-        ));
-
-        $data = $stmt->fetch();
-        $count = $stmt->rowCount();
-
-        if ($count > 0) {
+        // if there is at least one row set the session
+        if (count($data) > 0) {
             Session::init();
-            Session::set('usergroup', $data['role']);
-            Session::set('login', $data['login']);
-            Session::set('firstname', $data['firstname']);
-            Session::set('lastname', $data['lastname']);
-            Session::set('employee_id', $data['employee_id']);
+            Session::set('login', $data[0]['login']);
+            Session::set('role', $data[0]['role']);
             Session::set('loggedIn', true);
             header('location: ../bookings');
         } else {
@@ -50,11 +45,13 @@ class Login_Model extends Model
 
     /**
      * Here is the logout function to destroy the session and forward the user to the login page
+     * 
+     * @return void
      */
     public function logout()
     {
         Session::init();
-        $destroyArray = ['usergroup', 'login', 'loggedIn'];
+        $destroyArray = ['login', 'role', 'loggedIn'];
         Session::destroy($destroyArray);
         header('location: ' . URL . 'login');
         exit;

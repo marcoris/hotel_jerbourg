@@ -1,4 +1,4 @@
-<div class="jumbotron jumbotron-fluid bg bg-lok">
+<div class="jumbotron jumbotron-fluid bg bg-hotel">
     <div class="wrap">
         <div class="row">
             <h1 class="col-6">Login</h1>

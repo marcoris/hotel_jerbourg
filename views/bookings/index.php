@@ -79,13 +79,13 @@
             $i = 1;
             foreach ($this->bookingList as $key => $value) {
                 $nr = explode(" ", $value['created']);
-                $booking_nr = str_replace("-", "", $nr[0].$value['booking_id']);
+                $booking_nr = str_replace("-", "", $nr[0] . $value['booking_id']);
                 echo '<tr class="' .
                     ($value['category_id'] == 1 ? 'standard' : '') .
                     ($value['category_id'] == 2 ? 'premium' : '') .
                     ($value['category_id'] == 3 ? 'suite' : '') .
                     ($value['booking_status'] == 0 ? ' storno' : '') .
-                    ($value['booking_status'] == 3 ? ' checkout' : '') .
+                    ($value['booking_status'] == 4 ? ' checkout' : '') .
                     '">';
                 echo '<td>' . $i . '.</td>';
                 echo '<td>' . $booking_nr . '</td>';
@@ -95,8 +95,9 @@
                 echo '<td>' . 
                     ($value['booking_status'] == 0 ? '<em>Storniert</em>' : '') .
                     ($value['booking_status'] == 1 ? 'Reserviert' : '') .
-                    ($value['booking_status'] == 2 ? 'Check-In' : '') .
-                    ($value['booking_status'] == 3 ? 'Check-Out' : '') .
+                    ($value['booking_status'] == 2 ? 'Bezahlt' : '') .
+                    ($value['booking_status'] == 3 ? 'Check-In' : '') .
+                    ($value['booking_status'] == 4 ? 'Check-Out' : '') .
                     '</td>';
                 echo '<td>' . $value['arrive'] . '</td>';
                 echo '<td>' . $value['depart'] . '</td>';

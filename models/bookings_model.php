@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Bookings model class extends from model class
+ */
 class Bookings_Model extends Model
 {
     /**
@@ -12,7 +14,7 @@ class Bookings_Model extends Model
     
     /**
      * Checks if a booking is older than 5 days -> set booking status to deleted
-     * and set room to free
+     * and set room status to free
      * 
      * @return void
      */
@@ -29,7 +31,7 @@ class Bookings_Model extends Model
         );
 
         for ($i = 0; $i < count($created); $i++) {
-            if ((strtotime($created[$i]['created']) + (60*60*24*1)) < time()) {
+            if ((strtotime($created[$i]['created']) + (60*60*24*5)) < time()) {
                 // set booking status to deleted
                 $updateArray = array(
                     'booking_status' => 0,
@@ -50,7 +52,7 @@ class Bookings_Model extends Model
     }
     
     /**
-     * Gets the list of all guests
+     * Gets the list of all guests for the selects
      *
      * @return array The guests list
      */
@@ -66,7 +68,7 @@ class Bookings_Model extends Model
     }
     
     /**
-     * Gets all free rooms
+     * Gets all free rooms  with number and price for the selects
      *
      * @return array The free rooms list
      */
@@ -136,12 +138,14 @@ class Bookings_Model extends Model
      * Creates a booking and when needed the guests
      *
      * @param array $data The data
+     * 
+     * @return void
      */
     public function create($data)
     {
         // define guest id variables
-        $guest1_id;
-        $guest2_id;
+        $guest1_id = 0;
+        $guest2_id = 0;
 
         // if guest1 has id then he exists set id for bookings table
         $guest1_id = (!empty($data['guest1_id'])) ? $data['guest1_id'] : 0;
@@ -170,13 +174,12 @@ class Bookings_Model extends Model
 
         // if guest2 has no id then create a guest with the data and
         // get his id to set id for the bookings table
-        if ($guest2_id == 0 &&
-            (!empty($data['salutation2']) ||
-            !empty($data['firstname2']) ||
-            !empty($data['lastname2']) ||
-            !empty($data['birthday2']) ||
-            !empty($data['identity2'])
-            )
+        if ($guest2_id == 0
+            && (!empty($data['salutation2'])
+            || !empty($data['firstname2'])
+            || !empty($data['lastname2'])
+            || !empty($data['birthday2'])
+            || !empty($data['identity2']))
         ) {
             $insertArray2 = array(
                 'salutation' => $data['salutation2'],
@@ -254,13 +257,21 @@ class Bookings_Model extends Model
             'guest1_id' => $data['guest1_id'],
             'guest2_id' => $data['guest2_id'],
             'room_id' => $data['room_id'],
+            'booking_status' => $data['booking_status'],
             'arrive' => $data['arrive'],
             'depart' => $data['depart'],
-            'booking_status' => $data['booking_status'],
             'updated' => date("Y-m-d H:i:s")
         );
 
         $this->db->update('bookings', $updateArray, "booking_id={$data['booking_id']}");
+
+        // set room status
+        $updateArray2 = array(
+            'room_status' => ($data['booking_status'] == 0 || $data['booking_status'] == 4 ? 0 : 1),
+            'updated' => date("Y-m-d H:i:s")
+        );
+
+        $this->db->update('rooms', $updateArray2, "room_id={$data['room_id']}");
     }
 
     /**

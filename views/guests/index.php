@@ -43,8 +43,8 @@
                 echo '<td>' . $value['lastname'] . '</td>';
                 echo '<td>' . $value['birthday'] . '</td>';
                 echo '<td>' . $value['identity'] . '</td>';
-                echo '<td><a class="btn btn-success" href="' . URL . 'guests/edit/' . $value['guest_id'] . '"><i class="fas fa-pen"></i></a>';
-                echo '<a class="btn btn-danger delete" href="' . URL . 'guests/delete/' . $value['guest_id'] . '"><i class="fas fa-trash"></i></a>';
+                echo '<td><a class="btn btn-default" href="' . URL . 'guests/edit/' . $value['guest_id'] . '"><i class="fas fa-pen"></i></a>';
+                echo '<a class="btn btn-default delete" href="' . URL . 'guests/delete/' . $value['guest_id'] . '"><i class="fas fa-trash"></i></a>';
                 echo '</td>';
                 echo '</tr>';
                 $i++;

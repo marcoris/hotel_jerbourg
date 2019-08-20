@@ -40,7 +40,7 @@ $(function () {
     });
 
     $(".delete").on('click', function(e){
-        if (!confirm('Wirklich löschen?')) {
+        if (!confirm('Gast wirklich löschen?')) {
             e.preventDefault();
         }
     });

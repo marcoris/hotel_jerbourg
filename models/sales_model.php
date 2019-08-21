@@ -22,9 +22,17 @@ class Sales_Model extends Model
         return $this->db->select(
             'SELECT
                 categories.category_id,
-                YEAR(bookings.created) AS year,
-                MONTH(bookings.created) AS month,
-                SUM(categories.price) AS sales
+                categories.category,
+                YEAR(bookings.arrive) AS year,
+                MONTH(bookings.arrive) AS month,
+                SUM(categories.price * (
+                    SELECT
+                        DATEDIFF(bookings.depart, bookings.arrive)
+                    FROM
+                        bookings AS book
+                    WHERE book.booking_id = bookings.booking_id 
+                    )
+                ) AS sales
             FROM
                 bookings
                 JOIN rooms ON (rooms.room_id = bookings.room_id)

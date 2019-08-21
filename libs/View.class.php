@@ -5,7 +5,7 @@
 class View
 {
     /**
-     * The render function
+     * The render function to show the page
      * 
      * @param string $name The filename
      * @param boolean $noInclude If the view is with header and footer or not

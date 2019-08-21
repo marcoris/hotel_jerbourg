@@ -37,6 +37,7 @@ INSERT INTO `guest_to_booking` (`booking_id`, `guest_id`)
 VALUES
 	(1,1),
 	(1,2),
+	(1,3),
 	(2,1),
 	(2,11),
 	(3,3),

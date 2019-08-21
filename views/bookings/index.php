@@ -65,8 +65,7 @@
             <tr>
                 <th>Nr.</td>
                 <th>Buchungs-Nummer</td>
-                <th>Gast 1</td>
-                <th>Gast 2</td>
+                <th>Gast</td>
                 <th>Zimmer-Nummer</td>
                 <th>Buchungsstatus</td>
                 <th>Check-In</td>
@@ -89,8 +88,7 @@
                     '">';
                 echo '<td>' . $i . '.</td>';
                 echo '<td>' . $booking_nr . '</td>';
-                echo '<td>' . $value['first_guest'] . '</td>';
-                echo '<td>' . ($value['second_guest'] ? $value['second_guest'] : '-') . '</td>';
+                echo '<td>' . $value['guest'] . '</td>';
                 echo '<td>' . $value['room_number'] . '</td>';
                 echo '<td>' . 
                     ($value['booking_status'] == 0 ? '<em>Storniert</em>' : '') .
@@ -101,8 +99,9 @@
                     '</td>';
                 echo '<td>' . $value['arrive'] . '</td>';
                 echo '<td>' . $value['depart'] . '</td>';
-                echo '<td><a class="btn btn-success" href="' . URL . 'bookings/edit/' . $value['booking_id'] . '"><i class="fas fa-pen"></i></a>';
-                echo '<a class="btn btn-danger delete" href="' . URL . 'bookings/delete/' . $value['booking_id'] . '"><i class="fas fa-trash"></i></a>';
+                echo '<td><a class="btn btn-default" href="' . URL . 'bookings/edit/' . $value['booking_id'] . '"><i class="fas fa-pen"></i></a>';
+                echo '<a class="btn btn-default cancel" href="' . URL . 'bookings/cancel/' . $value['booking_id'] . '"><i class="fas fa-ban"></i></a>';
+                echo '<a class="btn btn-default delete" href="' . URL . 'bookings/delete/' . $value['booking_id'] . '"><i class="fas fa-trash"></i></a>';
                 echo '</td>';
                 echo '</tr>';
                 $i++;

@@ -105,7 +105,14 @@ $(function () {
 
     // delete confirmation
     $(".delete").on('click', function(e){
-        if (!confirm('Wirklich löschen?')) {
+        if (!confirm('Buchung wirklich löschen?')) {
+            e.preventDefault();
+        }
+    });
+
+    // cancel confirmation
+    $(".cancel").on('click', function(e){
+        if (!confirm('Buchung wirklick stornieren?')) {
             e.preventDefault();
         }
     });

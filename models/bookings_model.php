@@ -89,7 +89,7 @@ class Bookings_Model extends Model
     /**
      * Gets the booked room
      *
-     * @param int $id The booking id
+     * @param integer $id The booking id
      * 
      * @return array The booked room
      */
@@ -109,6 +109,25 @@ class Bookings_Model extends Model
     }
     
     /**
+     * Gets max columns for the guests
+     * 
+     * @return array Max column count
+     */
+    public function getMaxColumns()
+    {
+        return $this->db->select(
+            'SELECT
+                count(*) maximum FROM guest_to_booking 
+                INNER JOIN bookings ON bookings.booking_id = guest_to_booking.booking_id 
+            GROUP BY
+                guest_to_booking.booking_id 
+            ORDER BY
+                maximum DESC 
+            LIMIT 1'
+        );
+    }
+    
+    /**
      * Gets the list of all bookings
      *
      * @return array The bookings list
@@ -118,8 +137,7 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 bookings.booking_id,
-                CONCAT(g1.firstname, " ", g1.lastname) AS first_guest,
-                CONCAT(g2.firstname, " ", g2.lastname) AS second_guest,
+                CONCAT(guests.firstname, " ", guests.lastname) AS guest,
                 rooms.room_number,
                 bookings.created,
                 bookings.booking_status,
@@ -128,8 +146,7 @@ class Bookings_Model extends Model
                 rooms.category_id
             FROM
                 bookings
-                JOIN guests AS g1 ON (bookings.guest1_id = g1.guest_id)
-                LEFT JOIN guests AS g2 ON (bookings.guest2_id = g2.guest_id)
+                LEFT JOIN guests ON (bookings.guest_id = guests.guest_id)
                 JOIN rooms ON (rooms.room_id = bookings.room_id)'
         );
     }
@@ -223,7 +240,7 @@ class Bookings_Model extends Model
     /**
      * Gets the affected booking to edit
      *
-     * @param int $id The id of the affected booking
+     * @param integer $id The id of the affected booking
      * 
      * @return array booking data
      */
@@ -275,11 +292,33 @@ class Bookings_Model extends Model
     }
 
     /**
-     * Deletes the affected booking
+     * Gets the booking status (for cancel purposes)
      *
-     * @param int $id The affected id
+     * @param integer $id The booking id
+     * 
+     * @return integer booking status
      */
-    public function delete($id)
+    public function getBookingStatus($id)
+    {
+        // get booking status
+        return $this->db->select(
+            'SELECT
+                booking_status
+            FROM
+                bookings
+            WHERE
+                booking_id = :id', array(':id' => $id)
+        );
+    }
+
+    /**
+     * Cancels the affected booking
+     *
+     * @param integer $id The affected id
+     * 
+     * @return void
+     */
+    public function cancel($id)
     {
         // get room id to set room status to free
         $roomID = $this->db->select(
@@ -305,6 +344,20 @@ class Bookings_Model extends Model
             'updated' => date("Y-m-d H:i:s")
         );
 
-        $this->db->update('rooms', $updateArray2, "room_id={$roomID[0][room_id]}");
+        $this->db->update('rooms', $updateArray2, "room_id={$roomID[0]['room_id']}");
+    }
+
+    /**
+     * Deletes the affected booking
+     *
+     * @param integer $id The affected id
+     * 
+     * @return void
+     */
+    public function delete($id)
+    {
+        // Delete the relationships and booking permanently
+            // $this->db->delete('bookings', "booking_id = '$id'");
+            // $this->db->delete('guest_to_bookings', "booking_id = '$id'");
     }
 }

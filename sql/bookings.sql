@@ -27,12 +27,11 @@ DROP TABLE IF EXISTS `bookings`;
 
 CREATE TABLE `bookings` (
   `booking_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `guest1_id` int(11) NOT NULL DEFAULT '0',
-  `guest2_id` int(11) NOT NULL DEFAULT '0',
+  `guest_id` int(11) NOT NULL DEFAULT '0',
   `room_id` int(11) NOT NULL DEFAULT '0',
   `booking_status` int(11) NOT NULL DEFAULT '0',
-  `arrive` varchar(11) DEFAULT '',
-  `depart` varchar(11) DEFAULT '',
+  `arrive` datetime DEFAULT NULL,
+  `depart` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -42,18 +41,18 @@ CREATE TABLE `bookings` (
 LOCK TABLES `bookings` WRITE;
 /*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
 
-INSERT INTO `bookings` (`booking_id`, `guest1_id`, `guest2_id`, `room_id`, `booking_status`, `arrive`, `depart`, `created`, `updated`, `deleted`)
+INSERT INTO `bookings` (`booking_id`, `guest_id`, `room_id`, `booking_status`, `arrive`, `depart`, `created`, `updated`, `deleted`)
 VALUES
-	(1,1,2,1,4,'18.12.2018','25.12.2018','2018-12-16 10:06:41',NULL,NULL),
-	(2,1,11,10,4,'01.07.2019','02.07.2019','2019-01-01 10:09:00',NULL,NULL),
-	(3,3,0,10,1,'18.08.2019','20.08.2019','2019-08-19 10:11:32',NULL,NULL),
-	(4,4,5,11,1,'18.08.2019','22.08.2019','2019-08-19 10:12:44',NULL,NULL),
-	(5,6,7,6,0,'20.08.2019','25.08.2019','2019-08-19 10:14:15',NULL,NULL),
-	(6,8,0,13,1,'20.08.2019','26.08.2019','2019-08-19 10:15:11',NULL,NULL),
-	(7,3,11,2,1,'20.08.2019','21.08.2019','2019-08-19 10:18:08',NULL,NULL),
-	(8,8,11,3,1,'20.08.2019','21.08.2019','2019-08-19 10:18:48',NULL,NULL),
-	(9,9,10,4,1,'25.08.2019','30.08.2019','2019-08-19 10:19:37',NULL,NULL),
-	(10,11,0,5,2,'26.08.2019','27.08.2019','2019-08-19 10:20:22',NULL,NULL);
+	(1,1,1,4,'2018-12-18','2018-12-25','2018-12-16 10:06:41',NULL,NULL),
+	(2,2,10,4,'2019-07-01','2019-07-03','2019-01-01 10:09:00',NULL,NULL),
+	(3,3,10,1,'2019-08-18','2019-08-20','2019-08-19 10:11:32',NULL,NULL),
+	(4,4,5,1,'2019-08-18','2019-08-22','2019-08-19 10:12:44',NULL,NULL),
+	(5,6,7,0,'2019-08-20','2019-08-25','2019-08-19 10:14:15',NULL,NULL),
+	(6,8,0,1,'2019-08-20','2019-08-26','2019-08-19 10:15:11',NULL,NULL),
+	(7,3,11,1,'2019-08-20','2019-08-22','2019-08-19 10:18:08',NULL,NULL),
+	(8,8,11,1,'2019-08-20','2019-08-22','2019-08-19 10:18:48',NULL,NULL),
+	(9,9,10,1,'2019-08-25','2019-08-30','2019-08-19 10:19:37',NULL,NULL),
+	(10,11,5,2,'2019-08-26','2019-08-27','2019-08-19 10:20:22',NULL,NULL);
 
 /*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
 UNLOCK TABLES;

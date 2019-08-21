@@ -14,21 +14,13 @@
             <?php
             $i = 1;
             foreach ($this->sales as $key => $value) {
-                echo '<tr>';
-                echo '<td>' . $i . '.</td>';
-                echo '<td>CHF. ' . $value['sales'] . '.-</td>';
-                echo '<td>';
-                if ($value['category_id'] == 1) {
-                    echo "Standard";
-                } else if ($value['category_id'] == 2) {
-                    echo "Premium";
-                } else {
-                    echo "Suite";
-                }
-                echo '</td>';
-                echo '<td>' . date('F', mktime(0, 0, 0, $value['month'], 10)) . '</td>';
-                echo '<td>' . $value['year'] . '</td>';
-                echo '</tr>';
+                echo "<tr>
+                    <td>$i</td>
+                    <td>CHF. $value[sales].-</td>
+                    <td>$value[category]</td>
+                    <td>" . date('F', mktime(0, 0, 0, $value['month'], 10)) . "</td>
+                    <td>$value[year]</td>
+                </tr>";
                 $i++;
             }
             ?>

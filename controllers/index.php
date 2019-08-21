@@ -21,14 +21,4 @@ class Index extends Controller
     {
         $this->view->render('index/index');
     }
-
-    /**
-     * Call render function
-     * 
-     * @return void
-     */
-    public function error()
-    {
-        $this->view->render('index/error');
-    }
 }

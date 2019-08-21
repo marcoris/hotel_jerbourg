@@ -110,7 +110,8 @@ class App
      * 
      * @return false
      */
-    public function error($msg = '') {
+    public function error($msg = '')
+    {
         include 'controllers/error.php';
         $this->_controller = new ErrorHandler();
         $this->_controller->index($msg);

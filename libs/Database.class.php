@@ -39,9 +39,9 @@ class Database extends PDO
 
         // There was an error -> output the SQL error
         if (!$stmt->execute()) {
-            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
-            echo $stmt->errorInfo()[2];
-            die;
+            $error = "SQL Error({$stmt->errorInfo()[1]})<br>";
+            $error .= $this->error($stmt->errorInfo()[2]);
+            $this->error($error);
         }
 
         return $stmt->fetchAll($fetchMode);
@@ -70,9 +70,9 @@ class Database extends PDO
         
         // There was an error -> output the SQL error
         if (!$stmt->execute()) {
-            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
-            echo $stmt->errorInfo()[2];
-            die;
+            $error = "SQL Error({$stmt->errorInfo()[1]})<br>";
+            $error .= $this->error($stmt->errorInfo()[2]);
+            $this->error($error);
         }
     }
 
@@ -105,9 +105,9 @@ class Database extends PDO
         
         // There was an error -> output the SQL error
         if (!$stmt->execute()) {
-            echo "SQL Error({$stmt->errorInfo()[1]})<br>";
-            echo $stmt->errorInfo()[2];
-            die;
+            $error = "SQL Error({$stmt->errorInfo()[1]})<br>";
+            $error .= $this->error($stmt->errorInfo()[2]);
+            $this->error($error);
         }
     }
 
@@ -123,5 +123,20 @@ class Database extends PDO
     public function delete($table, $where, $limit = 1)
     {
         return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");
+    }
+
+    /**
+     * This handles the error message
+     * 
+     * @param string $msg The error message
+     * 
+     * @return false
+     */
+    public function error($msg = '')
+    {
+        include 'controllers/error.php';
+        $this->_controller = new ErrorHandler();
+        $this->_controller->index($msg);
+        return false;
     }
 }

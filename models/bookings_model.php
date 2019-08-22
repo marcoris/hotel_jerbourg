@@ -160,16 +160,12 @@ class Bookings_Model extends Model
      */
     public function create($data)
     {
-        // define guest id variables
-        $guest1_id = 0;
-        $guest2_id = 0;
-
-        // if guest1 has id then he exists set id for bookings table
-        $guest1_id = (!empty($data['guest1_id'])) ? $data['guest1_id'] : 0;
+        // if guest has id then he exists set id for bookings table
+        $guest_id = (!empty($data['guest_id'])) ? $data['guest_id'] : 0;
         
-        // if guest1 has no id then create a guest with the data and
+        // if guest has no id then create a guest with the data and
         // get his id to set id for the bookings table
-        if ($guest1_id == 0) {
+        if ($guest_id == 0) {
             $insertArray = array(
                 'salutation' => $data['salutation'],
                 'firstname' => $data['firstname'],
@@ -181,43 +177,14 @@ class Bookings_Model extends Model
     
             $this->db->insert('guests', $insertArray);
 
-            // set guest1 id
+            // set guest id
             $guest_id = $this->db->select('SELECT guest_id FROM guests ORDER BY guest_id DESC LIMIT 1');
-            $guest1_id = $guest_id[0]['guest_id'];
-        }
-        
-        // if guest2 has id then he exists set id for bookings table
-        $guest2_id = (!empty($data['guest2_id'])) ? $data['guest2_id'] : 0;
-
-        // if guest2 has no id then create a guest with the data and
-        // get his id to set id for the bookings table
-        if ($guest2_id == 0
-            && (!empty($data['salutation2'])
-            || !empty($data['firstname2'])
-            || !empty($data['lastname2'])
-            || !empty($data['birthday2'])
-            || !empty($data['identity2']))
-        ) {
-            $insertArray2 = array(
-                'salutation' => $data['salutation2'],
-                'firstname' => $data['firstname2'],
-                'lastname' => $data['lastname2'],
-                'birthday' => $data['birthday2'],
-                'identity' => $data['identity2'],
-                'created' => date("Y-m-d H:i:s")
-            );
-    
-            $this->db->insert('guests', $insertArray2);
-
-            // set guest2 id
-            $guest_id = $this->db->select('SELECT guest_id FROM guests ORDER BY guest_id DESC LIMIT 1');
-            $guest2_id = $guest_id[0]['guest_id'];
+            $guest_id = $guest_id[0]['guest_id'];
         }
 
         // insert data in bookings table
-        $insertArray3 = array(
-            'guest1_id' => $guest1_id,
-            'guest2_id' => $guest2_id,
+        $insertArray2 = array(
+            'guest_id' => $guest_id,
             'room_id' => $data['room_id'],
             'arrive' => $data['arrive'],
             'depart' => $data['depart'],
@@ -226,7 +193,7 @@ class Bookings_Model extends Model
         );
 
         // create booking
-        $this->db->insert('bookings', $insertArray3);
+        $this->db->insert('bookings', $insertArray2);
 
         // update room status to reserved
         $updateArray = array(
@@ -249,8 +216,7 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 booking_id,
-                guest1_id,
-                guest2_id,
+                guest_id,
                 room_id,
                 arrive,
                 depart,
@@ -271,8 +237,7 @@ class Bookings_Model extends Model
     public function editSave($data)
     {
         $updateArray = array(
-            'guest1_id' => $data['guest1_id'],
-            'guest2_id' => $data['guest2_id'],
+            'guest_id' => $data['guest_id'],
             'room_id' => $data['room_id'],
             'booking_status' => $data['booking_status'],
             'arrive' => $data['arrive'],
@@ -357,7 +322,6 @@ class Bookings_Model extends Model
     public function delete($id)
     {
         // Delete the relationships and booking permanently
-            // $this->db->delete('bookings', "booking_id = '$id'");
-            // $this->db->delete('guest_to_bookings', "booking_id = '$id'");
+        $this->db->delete('bookings', "booking_id = '$id'");
     }
 }

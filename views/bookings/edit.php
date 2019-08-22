@@ -1,21 +1,11 @@
 <div class="jumbotron jumbotron-fluid loggedin">
-    <h2>Reservation <strong><?php echo str_replace(".", "", $this->booking[0]['created']) . $this->booking[0]['booking_id']; ?></strong> bearbeiten</h2>
+    <h2>Reservation <strong><?php echo str_replace("-", "", substr($this->booking[0]['created'], 0, 10)) . $this->booking[0]['booking_id']; ?></strong> bearbeiten</h2>
     <form action="<?php echo URL; ?>bookings/editSave/<?php echo $this->booking[0]['booking_id']; ?>" method="post">
-    <label for="guest">Gast 1</label>
+    <label for="guest">Gast</label>
         <select name="guest" id="guest">
             <?php
             foreach ($this->setGuests as $key => $value) {
-                $selected = ($value['guest_id'] == $this->booking[0]['guest1_id']) ? 'selected' : '';
-                echo "<option $selected value='$value[guest_id]'>$value[guest]</option>";
-            }
-            ?>
-        </select><br>
-        <label for="guest2">Gast 2</label>
-        <select name="guest2" id="guest2">
-            <?php
-            echo ($this->booking[0]['guest2_id'] == 0) ? '<option value="">--- Gast 2 wählen</option>' : '';
-            foreach ($this->setGuests as $key => $value) {
-                $selected = ($value['guest_id'] == $this->booking[0]['guest2_id']) ? 'selected' : '';
+                $selected = ($value['guest_id'] == $this->booking[0]['guest_id']) ? 'selected' : '';
                 echo "<option $selected value='$value[guest_id]'>$value[guest]</option>";
             }
             ?>

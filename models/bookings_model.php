@@ -61,7 +61,7 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 guest_id,
-                CONCAT(firstname, " ", lastname, " >>> ", identity) AS guest
+                CONCAT(firstname, " ", lastname, " >>> ", identity) guest
             FROM
                 guests'
         );
@@ -77,10 +77,10 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 room_id,
-                CONCAT(room_number, " > ", cat.category, " (CHF ", cat.price, ".- / Nacht)") AS room
+                CONCAT(room_number, " > ", cat.category, " (CHF ", cat.price, ".- / Nacht)") room
             FROM
                 rooms
-                JOIN categories AS cat ON (cat.category_id = rooms.category_id)
+                JOIN categories cat ON (cat.category_id = rooms.category_id)
             WHERE
                 room_status = 0'
         );
@@ -98,7 +98,7 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 rooms.room_id,
-                CONCAT(room_number, " > ", categories.category, " (CHF ", categories.price, ".- / Nacht)") AS room
+                CONCAT(room_number, " > ", categories.category, " (CHF ", categories.price, ".- / Nacht)") room
             FROM
                 rooms
                 JOIN categories ON (categories.category_id = rooms.category_id)
@@ -107,26 +107,7 @@ class Bookings_Model extends Model
             bookings.booking_id = :id', array(':id' => $id)
         );
     }
-    
-    /**
-     * Gets max columns for the guests
-     * 
-     * @return array Max column count
-     */
-    public function getMaxColumns()
-    {
-        return $this->db->select(
-            'SELECT
-                count(*) maximum FROM guest_to_booking 
-                INNER JOIN bookings ON bookings.booking_id = guest_to_booking.booking_id 
-            GROUP BY
-                guest_to_booking.booking_id 
-            ORDER BY
-                maximum DESC 
-            LIMIT 1'
-        );
-    }
-    
+
     /**
      * Gets the list of all bookings
      *
@@ -137,12 +118,12 @@ class Bookings_Model extends Model
         return $this->db->select(
             'SELECT
                 bookings.booking_id,
-                CONCAT(guests.firstname, " ", guests.lastname) AS guest,
+                CONCAT(guests.firstname, " ", guests.lastname) guest,
                 rooms.room_number,
-                bookings.created,
+                CONCAT(DATE_FORMAT(bookings.created, "%Y%m%d"), bookings.booking_id) booking_nr,
                 bookings.booking_status,
-                bookings.arrive,
-                bookings.depart,
+                DATE_FORMAT(bookings.arrive, "%d.%m.%Y") arrive,
+                DATE_FORMAT(bookings.depart, "%d.%m.%Y") depart,
                 rooms.category_id
             FROM
                 bookings
@@ -186,8 +167,8 @@ class Bookings_Model extends Model
         $insertArray2 = array(
             'guest_id' => $guest_id,
             'room_id' => $data['room_id'],
-            'arrive' => $data['arrive'],
-            'depart' => $data['depart'],
+            'arrive' => date("Y-m-d", strtotime($data['arrive'])),
+            'depart' => date("Y-m-d", strtotime($data['depart'])),
             'booking_status' => 1,
             'created' => date("Y-m-d H:i:s")
         );
@@ -218,8 +199,8 @@ class Bookings_Model extends Model
                 booking_id,
                 guest_id,
                 room_id,
-                arrive,
-                depart,
+                DATE_FORMAT(arrive, "%d.%m.%Y") arrive,
+                DATE_FORMAT(depart, "%d.%m.%Y") depart,
                 booking_status,
                 created
             FROM
@@ -240,8 +221,8 @@ class Bookings_Model extends Model
             'guest_id' => $data['guest_id'],
             'room_id' => $data['room_id'],
             'booking_status' => $data['booking_status'],
-            'arrive' => $data['arrive'],
-            'depart' => $data['depart'],
+            'arrive' => date("Y-m-d", strtotime($data['arrive'])),
+            'depart' => date("Y-m-d", strtotime($data['depart'])),
             'updated' => date("Y-m-d H:i:s")
         );
 

@@ -31,7 +31,7 @@ CREATE TABLE `guests` (
   `firstname` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) DEFAULT NULL,
   `birthday` varchar(11) DEFAULT NULL,
-  `identity` varchar(11) DEFAULT NULL,
+  `identity` varchar(11) DEFAULT NULL UNIQUE,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   `deleted` datetime DEFAULT NULL,

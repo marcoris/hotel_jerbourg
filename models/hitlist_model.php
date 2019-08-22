@@ -25,10 +25,9 @@ class Hitlist_Model extends Model
                 CONCAT(guests.firstname, " ", guests.lastname) AS guest_name
             FROM
                 bookings
-                JOIN guest_to_booking AS gtb ON (gtb.booking_id = bookings.booking_id)
-                JOIN guests ON (guests.guest_id = gtb.guest_id)
+                JOIN guests ON (guests.guest_id = bookings.guest_id)
             WHERE
-                bookings.booking_status != 0
+                bookings.booking_status > 1
             GROUP BY
                 guest_name
             ORDER BY

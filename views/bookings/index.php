@@ -51,8 +51,6 @@
             <?php
             $i = 1;
             foreach ($this->bookingList as $key => $value) {
-                $nr = explode(" ", $value['created']);
-                $booking_nr = str_replace("-", "", $nr[0] . $value['booking_id']);
                 echo '<tr class="' .
                     ($value['category_id'] == 1 ? 'standard' : '') .
                     ($value['category_id'] == 2 ? 'premium' : '') .
@@ -61,7 +59,7 @@
                     ($value['booking_status'] == 4 ? ' checkout' : '') .
                     '">';
                 echo '<td>' . $i . '.</td>';
-                echo '<td>' . $booking_nr . '</td>';
+                echo '<td>' . $value['booking_nr'] . '</td>';
                 echo '<td>' . $value['guest'] . '</td>';
                 echo '<td>' . $value['room_number'] . '</td>';
                 echo '<td>' . 

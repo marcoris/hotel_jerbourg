@@ -37,9 +37,9 @@ LOCK TABLES `categories` WRITE;
 
 INSERT INTO `categories` (`category_id`, `category`, `price`)
 VALUES
-	(1,'Standard',100),
-	(2,'Premium',200),
-	(3,'Suite',300);
+	(1,'Standard',153),
+	(2,'Premium',193),
+	(3,'Suite',278);
 
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;

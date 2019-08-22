@@ -45,6 +45,5 @@ sudo systemctl restart apache2.service
 sudo mysql hotel < /var/www/html/sql/bookings.sql
 sudo mysql hotel < /var/www/html/sql/categories.sql
 sudo mysql hotel < /var/www/html/sql/employees.sql
-sudo mysql hotel < /var/www/html/sql/guest_to_booking.sql
 sudo mysql hotel < /var/www/html/sql/guests.sql
 sudo mysql hotel < /var/www/html/sql/rooms.sql

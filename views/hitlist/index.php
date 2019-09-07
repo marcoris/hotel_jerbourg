@@ -13,7 +13,7 @@
             $i = 1;
             foreach ($this->hitlist as $key => $value) {
                 echo '<tr><td>' . $i . '.</td>';
-                echo '<td>' . $value['guest_name'] . '</td>';
+                echo '<td>' . htmlentities($value['guest_name']) . '</td>';
                 echo '<td>' . $value['counts'] . '</td>';
                 echo '</tr>';
                 $i++;

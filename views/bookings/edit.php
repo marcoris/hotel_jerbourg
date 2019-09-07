@@ -6,7 +6,7 @@
             <?php
             foreach ($this->setGuests as $key => $value) {
                 $selected = ($value['guest_id'] == $this->booking[0]['guest_id']) ? 'selected' : '';
-                echo "<option $selected value='$value[guest_id]'>$value[guest]</option>";
+                echo "<option $selected value='$value[guest_id]'>" . htmlentities($value['guest']) . "</option>";
             }
             ?>
         </select><br>

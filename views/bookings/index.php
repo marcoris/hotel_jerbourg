@@ -6,7 +6,7 @@
             <option value="">--- Gast wählen</option>
             <?php
             foreach ($this->setGuests as $key => $value) {
-                echo "<option value='$value[guest_id]'>$value[guest]</option>";
+                echo "<option value='$value[guest_id]'>" . htmlentities($value['guest']) . "</option>";
             }
             ?>
         </select><br>
@@ -60,7 +60,7 @@
                     '">';
                 echo '<td>' . $i . '.</td>';
                 echo '<td>' . $value['booking_nr'] . '</td>';
-                echo '<td>' . $value['guest'] . '</td>';
+                echo '<td>' . htmlentities($value['guest']) . '</td>';
                 echo '<td>' . $value['room_number'] . '</td>';
                 echo '<td>' . 
                     ($value['booking_status'] == 0 ? '<em>Storniert</em>' : '') .

@@ -39,8 +39,8 @@
                     echo 'Frau';
                 }
                 echo '</td>';
-                echo '<td>' . $value['firstname'] . '</td>';
-                echo '<td>' . $value['lastname'] . '</td>';
+                echo '<td>' . htmlentities($value['firstname']) . '</td>';
+                echo '<td>' . htmlentities($value['lastname']) . '</td>';
                 echo '<td>' . $value['birthday'] . '</td>';
                 echo '<td>' . $value['identity'] . '</td>';
                 echo '<td><a class="btn btn-default" href="' . URL . 'guests/edit/' . $value['guest_id'] . '"><i class="fas fa-pen"></i></a>';

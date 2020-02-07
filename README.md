@@ -1,6 +1,6 @@
 # TEKO
 
-## Hotel Jerbourg
+## Hotel Jerbourgs
 
 ### Fallstudie moderne Webarchitekturen im Einsatz
 
